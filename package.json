@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/super3/mini-cdn#readme",
   "dependencies": {
+    "express": "^4.14.1",
+    "nodemon": "^1.11.0",
     "request": "^2.79.0"
   }
 }
