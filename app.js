@@ -2,6 +2,8 @@
 
 var fs = require('fs');
 var request = require('request');
+var url = require("url");
+var path = require("path");
 
 var express = require('express');
 var app = express();
@@ -18,12 +20,11 @@ var download = function(uri, filename, callback){
 };
 
 app.get('/serve/:url', function(req, res) {
-
-  download(req.params.url, config.cacheDir + 'google.png', function() {
+  var filename = path.basename(url.parse(req.params.url).pathname);
+  download(req.params.url, config.cacheDir  + filename, function() {
     console.log('done');
-    res.sendFile(__dirname + '/' + config.cacheDir + 'google.png');
+    res.sendFile(__dirname + '/' + config.cacheDir + filename);
   });
-
 });
 
 // start the server, if running this script alone

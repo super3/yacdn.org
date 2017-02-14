@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/super3/mini-cdn#readme",
   "dependencies": {
+    "bluebird": "^3.4.7",
     "express": "^4.14.1",
+    "mongoose": "^4.8.2",
     "nodemon": "^1.11.0",
     "request": "^2.79.0"
   }
