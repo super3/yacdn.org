@@ -1,1 +1,1 @@
-# mini-cdn
+# yacdn

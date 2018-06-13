@@ -1,6 +1,6 @@
 {
-  "name": "mini-cdn",
-  "version": "1.0.0",
+  "name": "yacdn",
+  "version": "0.1.0",
   "description": "",
   "main": "app.js",
   "scripts": {
@@ -8,18 +8,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/super3/mini-cdn.git"
+    "url": "git+https://github.com/super3/yacdn.git"
   },
   "author": "",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/super3/mini-cdn/issues"
+    "url": "https://github.com/super3/yacdn/issues"
   },
-  "homepage": "https://github.com/super3/mini-cdn#readme",
+  "homepage": "https://github.com/super3/yacdn#readme",
   "dependencies": {
     "bluebird": "^3.4.7",
     "express": "^4.14.1",
-    "mongoose": "^4.8.2",
+    "mongoose": "^5.1.5",
     "nodemon": "^1.11.0",
     "request": "^2.79.0"
   }
