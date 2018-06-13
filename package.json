@@ -17,10 +17,7 @@
   },
   "homepage": "https://github.com/super3/yacdn#readme",
   "dependencies": {
-    "bluebird": "^3.4.7",
     "express": "^4.14.1",
-    "mongoose": "^5.1.5",
-    "nodemon": "^1.11.0",
     "request": "^2.79.0"
   }
 }
