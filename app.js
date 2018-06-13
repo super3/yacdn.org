@@ -1,4 +1,4 @@
-'use strict';
+/* eslint curly: 0 */
 
 const fs = require('fs');
 const url = require('url');
@@ -10,7 +10,8 @@ const app = express();
 const config = require('./config.js');
 
 const download = function (uri, filename, callback) {
-	request.head(uri, (err, res, body) => {
+	request.head(uri, (err, res) => {
+		if (err) console.log(err);
 		console.log('content-type:', res.headers['content-type']);
 		console.log('content-length:', res.headers['content-length']);
 		request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
@@ -21,7 +22,7 @@ app.get('/serve/:url', (req, res) => {
 	const filename = path.basename(url.parse(req.params.url).pathname);
 	download(req.params.url, config.cacheDir + filename, () => {
 		console.log('done');
-		res.sendFile(__dirname + '/' + config.cacheDir + filename);
+		res.sendFile(path.join(__dirname, config.cacheDir, filename));
 	});
 });
 
