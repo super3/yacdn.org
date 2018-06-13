@@ -1,38 +1,36 @@
 'use strict';
 
-var fs = require('fs');
-var request = require('request');
-var url = require("url");
-var path = require("path");
+const fs = require('fs');
+const url = require('url');
+const path = require('path');
+const request = require('request');
+const express = require('express');
 
-var express = require('express');
-var app = express();
+const app = express();
+const config = require('./config.js');
 
-var config = require('./config.js');
-
-var download = function(uri, filename, callback){
-  request.head(uri, function(err, res, body){
-    console.log('content-type:', res.headers['content-type']);
-    console.log('content-length:', res.headers['content-length']);
-
-    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-  });
+const download = function (uri, filename, callback) {
+	request.head(uri, (err, res, body) => {
+		console.log('content-type:', res.headers['content-type']);
+		console.log('content-length:', res.headers['content-length']);
+		request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+	});
 };
 
-app.get('/serve/:url', function(req, res) {
-  var filename = path.basename(url.parse(req.params.url).pathname);
-  download(req.params.url, config.cacheDir  + filename, function() {
-    console.log('done');
-    res.sendFile(__dirname + '/' + config.cacheDir + filename);
-  });
+app.get('/serve/:url', (req, res) => {
+	const filename = path.basename(url.parse(req.params.url).pathname);
+	download(req.params.url, config.cacheDir + filename, () => {
+		console.log('done');
+		res.sendFile(__dirname + '/' + config.cacheDir + filename);
+	});
 });
 
-// start the server, if running this script alone
+// Start the server, if running this script alone
 if (require.main === module) {
-  /* istanbul ignore next */
-  app.listen(3000, function() {
-    console.log('Server listening on port 3000...');
-  });
+	/* istanbul ignore next */
+	app.listen(3000, () => {
+		console.log('Server listening on port 3000...');
+	});
 }
 
 module.exports = app;
