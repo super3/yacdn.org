@@ -1,9 +1,9 @@
 /* eslint curly: 0 */
 
 const fs = require('fs');
-const url = require('url');
 const path = require('path');
 const util = require('util');
+const crypto = require('crypto');
 const request = require('request');
 const Koa = require('koa');
 const Router = require('koa-router');
@@ -22,11 +22,24 @@ const download = util.promisify((uri, filename, callback) => {
 	});
 });
 
-router.get('/serve/:url', async ctx => {
-	const filename = path.basename(url.parse(ctx.params.url).pathname);
+const access = util.promisify(fs.access);
 
-	await download(ctx.params.url, config.cacheDir + filename);
-	await send(ctx, path.join(config.cacheDir, filename));
+router.get('/serve/:url', async ctx => {
+	const {ext} = path.parse(ctx.params.url);
+
+	const fileHash = crypto.createHash('sha256')
+		.update(ctx.params.url)
+		.digest('hex');
+
+	const filePath = path.join(config.cacheDir, fileHash) + ext;
+
+	try {
+		await access(filePath);
+	} catch (err) {
+		await download(ctx.params.url, path.join(__dirname, filePath));
+	}
+
+	await send(ctx, filePath);
 	console.log('done');
 });
 
