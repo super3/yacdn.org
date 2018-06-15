@@ -1,0 +1,8 @@
+{
+	apps: [{
+		name: "yacdn",
+		script: "app.js",
+		max_memory_restart: "256M",
+		watch: true
+	}]
+}
