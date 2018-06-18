@@ -48,8 +48,8 @@ app.use(router.routes());
 // Start the server, if running this script alone
 if (require.main === module) {
 	/* istanbul ignore next */
-	app.listen(3000, () => {
-		console.log('Server listening on port 3000...');
+	app.listen(80, () => {
+		console.log('Server listening on port 80...');
 	});
 }
 
