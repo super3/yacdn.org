@@ -2,7 +2,7 @@
 
 #### How to Use:
 ```
-http://165.227.186.196:3000/serve/<encoded_uri>
+http:/yacdn.org/serve/<encoded_uri>
 ```
 
 #### Encode URL Tools
@@ -12,6 +12,6 @@ http://165.227.186.196:3000/serve/<encoded_uri>
 
 #### Example
 ```
-http://165.227.186.196:3000/serve/http%3A%2F%2Fmeowbaari.com%2Fwp-content%2Fuploads%2F2016%2F06%2F1464933654_cat_sleep.png
+http://yacdn.org/serve/http%3A%2F%2Fmeowbaari.com%2Fwp-content%2Fuploads%2F2016%2F06%2F1464933654_cat_sleep.png
 ```
-![http://165.227.186.196:3000/serve/http%3A%2F%2Fmeowbaari.com%2Fwp-content%2Fuploads%2F2016%2F06%2F1464933654_cat_sleep.png](http://165.227.186.196:3000/serve/http%3A%2F%2Fmeowbaari.com%2Fwp-content%2Fuploads%2F2016%2F06%2F1464933654_cat_sleep.png)
+![http://yacdn.org/serve/http%3A%2F%2Fmeowbaari.com%2Fwp-content%2Fuploads%2F2016%2F06%2F1464933654_cat_sleep.png](http://yacdn.org/serve/http%3A%2F%2Fmeowbaari.com%2Fwp-content%2Fuploads%2F2016%2F06%2F1464933654_cat_sleep.png)
