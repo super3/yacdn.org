@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/super3/yacdn#readme",
   "dependencies": {
-    "express": "^4.14.1",
+    "express": "^4.16.4",
     "koa": "^2.5.1",
     "koa-router": "^7.4.0",
     "koa-send": "^4.1.3",
