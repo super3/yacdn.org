@@ -2,7 +2,7 @@
 
 #### How to Use:
 ```
-http:/yacdn.org/serve/<encoded_uri>
+http://yacdn.org/serve/<encoded_uri>
 ```
 
 #### Encode URL Tools
