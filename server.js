@@ -35,7 +35,7 @@ router.get('/serve/:url', async ctx => {
 
 	try {
 		await access(filePath);
-	} catch (err) {
+	} catch (error) {
 		await download(ctx.params.url, path.join(__dirname, filePath));
 	}
 
