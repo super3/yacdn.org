@@ -1,7 +1,7 @@
 {
 	apps: [{
 		name: "yacdn",
-		script: "app.js",
+		script: "server.js",
 		max_memory_restart: "256M",
 		watch: true
 	}]
