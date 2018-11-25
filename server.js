@@ -16,8 +16,9 @@ const config = require('./config.js');
 const download = util.promisify((uri, filename, callback) => {
 	request.head(uri, (err, res) => {
 		if (err) console.log(err);
-		console.log('content-type:', res.headers['content-type']);
-		console.log('content-length:', res.headers['content-length']);
+		const type = res.headers['content-type'];
+		const length = res.headers['content-length'];
+		console.log(`Downloading: ${uri} (${type}, ${length} bytes)`);
 		request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
 	});
 });
@@ -27,11 +28,11 @@ const access = util.promisify(fs.access);
 router.get('/serve/:url', async ctx => {
 	const {ext} = path.parse(ctx.params.url);
 
-	const fileHash = crypto.createHash('sha256')
+	const urlHash = crypto.createHash('sha256')
 		.update(ctx.params.url)
 		.digest('hex');
 
-	const filePath = path.join(config.cacheDir, fileHash) + ext;
+	const filePath = path.join(config.cacheDir, urlHash) + ext;
 
 	try {
 		await access(filePath);
@@ -40,7 +41,7 @@ router.get('/serve/:url', async ctx => {
 	}
 
 	await send(ctx, filePath);
-	console.log('done');
+	console.log('Served: ' + ctx.params.url);
 });
 
 app.use(router.routes());
