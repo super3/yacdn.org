@@ -1,0 +1,12 @@
+language: node_js
+
+node_js:
+    "node"
+
+# don't need now, but will in the future
+services:
+    - redis-server
+
+after_script:
+    - npm run coverage
+    - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
