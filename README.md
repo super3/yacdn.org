@@ -19,9 +19,13 @@ http://yacdn.org/serve/http%3A%2F%2Fmeowbaari.com%2Fwp-content%2Fuploads%2F2016%
 #### Embeddable Script
 Paste this into your browser console to replace all images. Doesn't work for https:// yet. 
 ```javascript
-javascript: var imgs = document.getElementsByTagName("img");
-for (var i = 0, l = imgs.length; i < l; i++) {
-    const encode = encodeURIComponent(imgs[i].src);
-    imgs[i].src = `http://yacdn.org/serve/${encode}`;
-}
+<script>
+document.addEventListener('ready', function() {
+    var imgs = document.getElementsByTagName("img");
+    for (var i = 0, l = imgs.length; i < l; i++) {
+        const encode = encodeURIComponent(imgs[i].src);
+        imgs[i].src = `http://yacdn.org/serve/${encode}`;
+    }
+});
+</script>
 ```
