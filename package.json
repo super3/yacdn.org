@@ -4,19 +4,24 @@
   "description": "Yet Another CDN.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run testsuite && npm run linter",
+    "testsuite": "./node_modules/.bin/mocha tests/* --recursive --exit",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec --exit",
+    "linter": "xo",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/super3/yacdn.git"
+    "url": "git+https://github.com/ovsoinc/yacdn.git"
   },
   "author": "",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/super3/ovsoinc/issues"
+    "url": "https://github.com/ovsoinc/yacdn/issues"
   },
-  "homepage": "https://github.com/super3/ovsoinc#readme",
+  "homepage": "https://github.com/ovsoinc/yacdn#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "express": "^4.16.4",
     "koa": "^2.6.2",
     "koa-router": "^7.4.0",
@@ -25,6 +30,24 @@
     "request": "^2.88.0"
   },
   "devDependencies": {
+    "coveralls": "^3.0.2",
+    "mocha": "^5.2.0",
+    "mocker": "^0.1.2",
     "xo": "^0.23.0"
+  },
+  "xo": {
+    "globals": [
+      "window",
+      "describe",
+      "it",
+      "before"
+    ],
+    "rules": {
+      "no-await-in-loop": "off",
+      "curly": "off",
+      "capitalized-comments": "off",
+      "no-new": "off",
+      "prefer-rest-params": "off"
+    }
   }
 }

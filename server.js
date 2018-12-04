@@ -56,7 +56,7 @@ app.use(router.routes());
 if (require.main === module) {
 	/* istanbul ignore next */
 	app.listen(3000, () => {
-		console.log('Server listening on port 80...');
+		console.log('Server listening on port 3000...');
 	});
 }
 
