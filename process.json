@@ -3,6 +3,6 @@
 		name: "yacdn",
 		script: "server.js",
 		max_memory_restart: "256M",
-		watch: true
+		watch: false
 	}]
 }
