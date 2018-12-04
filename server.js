@@ -8,6 +8,7 @@ const request = require('request');
 const Koa = require('koa');
 const Router = require('koa-router');
 const send = require('koa-send');
+const axios = require('axios');
 
 const app = new Koa();
 const router = new Router();
@@ -25,11 +26,11 @@ const download = util.promisify((uri, filename, callback) => {
 
 const access = util.promisify(fs.access);
 
-app.use(async ctx => {
+app.use(async (ctx, next) => {
 	const servePath = '/serve/';
 
 	if (!ctx.path.startsWith(servePath))
-		return;
+		return next();
 
 	const url = ctx.path.slice(servePath.length);
 	const {ext} = path.parse(url);
@@ -48,6 +49,26 @@ app.use(async ctx => {
 
 	await send(ctx, filePath);
 	console.log('Served: ' + url);
+});
+
+app.use(async ctx => {
+	const servePath = '/proxy/';
+
+	if (!ctx.path.startsWith(servePath))
+		return;
+
+	const url = ctx.path.slice(servePath.length) + '?' + ctx.querystring;
+
+	console.log(url);
+
+	const response = await axios.get(url, {
+		responseType: 'stream'
+	});
+
+	ctx.set('Access-Control-Allow-Origin', '*');
+
+	ctx.set('Content-Type', response.headers['content-type']);
+	ctx.body = response.data;
 });
 
 app.use(router.routes());
