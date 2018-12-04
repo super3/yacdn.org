@@ -1,5 +1,10 @@
 # yacdn.org
 
+[![Build Status](https://travis-ci.org/ovsoinc/yacdn.org.svg?branch=master)](https://travis-ci.org/ovsoinc/yacdn.org)
+[![Coverage Status](https://coveralls.io/repos/github/ovsoinc/yacdn.org/badge.svg?branch=master)](https://coveralls.io/github/ovsoinc/yacdn.org?branch=master)
+[![License](https://img.shields.io/badge/license-AGPLv3-blue.svg?label=license)](https://github.com/Storj/ovsoinc/yacdn.org/blob/master/LICENSE)
+[![GitHub contributors](https://img.shields.io/github/contributors/ovsoinc/yacdn.org.svg)](https://github.com/ovsoinc/yacdn.org/graphs/contributors)
+
 #### How to Use:
 ```
 https://yacdn.org/serve/<uri>
