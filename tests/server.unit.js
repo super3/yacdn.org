@@ -12,8 +12,15 @@ describe('yacdn', () => {
 	});
 
 	describe('/serve', () => {
-		it('should return correct data', async () => {
+		it('should serve correct data', async () => {
 			const {data} = await axios.get(`http://localhost:3000/serve/${testUrl}`);
+			assert.strictEqual(data, testResult);
+		});
+	});
+
+	describe('/proxy', () => {
+		it('should proxy correct data', async () => {
+			const {data} = await axios.get(`http://localhost:3000/proxy/${testUrl}`);
 			assert.strictEqual(data, testResult);
 		});
 	});
