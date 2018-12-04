@@ -25,11 +25,17 @@ const download = util.promisify((uri, filename, callback) => {
 
 const access = util.promisify(fs.access);
 
-router.get('/serve/:url', async ctx => {
-	const {ext} = path.parse(ctx.params.url);
+app.use(async ctx => {
+	const servePath = '/serve/';
+
+	if (!ctx.path.startsWith(servePath))
+		return;
+
+	const url = ctx.path.slice(servePath.length);
+	const {ext} = path.parse(url);
 
 	const urlHash = crypto.createHash('sha256')
-		.update(ctx.params.url)
+		.update(url)
 		.digest('hex');
 
 	const filePath = path.join(config.cacheDir, urlHash) + ext;
@@ -37,11 +43,11 @@ router.get('/serve/:url', async ctx => {
 	try {
 		await access(filePath);
 	} catch (error) {
-		await download(ctx.params.url, path.join(__dirname, filePath));
+		await download(url, path.join(__dirname, filePath));
 	}
 
 	await send(ctx, filePath);
-	console.log('Served: ' + ctx.params.url);
+	console.log('Served: ' + url);
 });
 
 app.use(router.routes());
