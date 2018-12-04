@@ -41,6 +41,6 @@ https://yacdn.org/proxy/<uri>
 
 #### Example
 ```
-https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png
+https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/1464933927_cat_acrobat.png
 ```
-![https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png](https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png)
+![https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/1464933927_cat_acrobat.png](https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/1464933927_cat_acrobat.png)
