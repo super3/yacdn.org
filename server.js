@@ -59,7 +59,7 @@ app.use(async ctx => {
 
 	const url = ctx.path.slice(servePath.length) + '?' + ctx.querystring;
 
-	console.log(url);
+	console.log(`Proxy: ${url}`);
 
 	const response = await axios.get(url, {
 		responseType: 'stream'
