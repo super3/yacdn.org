@@ -4,7 +4,7 @@
   "description": "Yet Another CDN.",
   "main": "server.js",
   "scripts": {
-    "test": "npm run testsuite && npm run linter",
+    "test": "npm run testsuite",
     "testsuite": "./node_modules/.bin/mocha test/* --recursive --exit",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec --exit",
     "linter": "xo",
