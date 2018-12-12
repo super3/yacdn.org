@@ -9,6 +9,7 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const send = require('koa-send');
 const axios = require('axios');
+const redis = require('./lib/redis');
 
 const app = new Koa();
 const router = new Router();
@@ -32,6 +33,8 @@ app.use(async (ctx, next) => {
 	if (!ctx.path.startsWith(servePath))
 		return next();
 
+	await redis.incr('cdnhits');
+
 	const url = ctx.path.slice(servePath.length);
 	const {ext} = path.parse(url);
 
@@ -51,11 +54,13 @@ app.use(async (ctx, next) => {
 	console.log('Served: ' + url);
 });
 
-app.use(async ctx => {
+app.use(async (ctx, next) => {
 	const servePath = '/proxy/';
 
 	if (!ctx.path.startsWith(servePath))
-		return;
+		return next();
+
+	await redis.incr('proxyhits');
 
 	const url = ctx.path.slice(servePath.length) + '?' + ctx.querystring;
 
@@ -69,6 +74,22 @@ app.use(async ctx => {
 
 	ctx.set('Content-Type', response.headers['content-type']);
 	ctx.body = response.data;
+});
+
+app.use(async ctx => {
+	const servePath = '/stats';
+
+	if (!ctx.path.startsWith(servePath))
+		return;
+
+	const stats = {
+		cdnHits: Number(await redis.get('cdnhits')),
+		cdnData: 0,
+		proxyHits: Number(await redis.get('proxyhits')),
+		proxyData: 0
+	};
+
+	ctx.body = stats;
 });
 
 app.use(router.routes());
