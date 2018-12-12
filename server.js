@@ -33,6 +33,8 @@ app.use(async (ctx, next) => {
 	if (!ctx.path.startsWith(servePath))
 		return next();
 
+	await redis.incr('cdnhits');
+
 	const url = ctx.path.slice(servePath.length);
 	const {ext} = path.parse(url);
 
@@ -58,6 +60,8 @@ app.use(async (ctx, next) => {
 	if (!ctx.path.startsWith(servePath))
 		return next();
 
+	await redis.incr('proxyhits');
+
 	const url = ctx.path.slice(servePath.length) + '?' + ctx.querystring;
 
 	console.log(`Proxy: ${url}`);
@@ -72,16 +76,16 @@ app.use(async (ctx, next) => {
 	ctx.body = response.data;
 });
 
-app.use(ctx => {
+app.use(async ctx => {
 	const servePath = '/stats';
 
 	if (!ctx.path.startsWith(servePath))
 		return;
 
 	const stats = {
-		cdnHits: 0,
+		cdnHits: Number(await redis.get('cdnhits')),
 		cdnData: 0,
-		proxyHits: 0,
+		proxyHits: Number(await redis.get('proxyhits')),
 		proxyData: 0
 	};
 
