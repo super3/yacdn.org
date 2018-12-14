@@ -28,7 +28,7 @@
     "koa-router": "^7.4.0",
     "koa-send": "^5.0.0",
     "mime-types": "^2.1.21",
-    "nodemon": "^1.18.8",
+    "nodemon": "^1.18.9",
     "request": "^2.88.0"
   },
   "devDependencies": {
