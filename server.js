@@ -28,6 +28,13 @@ const download = util.promisify((uri, filename, callback) => {
 const access = util.promisify(fs.access);
 
 app.use(async (ctx, next) => {
+	if (ctx.path === '/')
+		return ctx.redirect('https://ovsoinc.github.io/yacdn.org');
+
+	await next();
+});
+
+app.use(async (ctx, next) => {
 	const servePath = '/serve/';
 
 	if (!ctx.path.startsWith(servePath))
