@@ -22,7 +22,7 @@ https://yacdn.org/serve/http://meowbaari.com/wp-content/uploads/2016/06/14649336
 
 #### Embeddable Script
 Paste this into your browser console to replace all images.
-```javascript
+```html
 <script>
 document.addEventListener('ready', function() {
     var imgs = document.getElementsByTagName("img");
