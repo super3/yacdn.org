@@ -23,7 +23,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "express": "^4.16.4",
-    "ioredis": "^4.3.0",
+    "ioredis": "^4.6.2",
     "koa": "^2.7.0",
     "koa-router": "^7.4.0",
     "koa-send": "^5.0.0",
