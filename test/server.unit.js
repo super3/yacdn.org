@@ -1,5 +1,6 @@
 const assert = require('assert');
 const axios = require('axios');
+const del = require('del');
 
 const testUrl = 'https://gist.githubusercontent.com/super3/06bec2ec29b7588728100df720a4b18d/raw/6cfc71b3f70d85429a737dc01b9441799fec14bd/gistfile1.txt';
 const testResult = 'Hello World!';
@@ -16,6 +17,13 @@ describe('yacdn', () => {
 	});
 
 	describe('/serve', () => {
+		it('should serve correct data', async () => {
+			await del(`${__dirname}/../cache/*.*`);
+
+			const {data} = await axios.get(`http://localhost:3000/serve/${testUrl}`);
+			assert.strictEqual(data, testResult);
+		});
+
 		it('should serve correct data', async () => {
 			const {data} = await axios.get(`http://localhost:3000/serve/${testUrl}`);
 			assert.strictEqual(data, testResult);
