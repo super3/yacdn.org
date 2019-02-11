@@ -11,6 +11,10 @@ describe('yacdn', () => {
 		app.listen(3000, done);
 	});
 
+	describe('/', () => {
+
+	});
+
 	describe('/serve', () => {
 		it('should serve correct data', async () => {
 			const {data} = await axios.get(`http://localhost:3000/serve/${testUrl}`);
