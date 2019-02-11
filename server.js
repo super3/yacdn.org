@@ -15,15 +15,19 @@ const app = new Koa();
 const router = new Router();
 const config = require('./config.js');
 
-const download = util.promisify((uri, filename, callback) => {
-	request.head(uri, (err, res) => {
-		if (err) console.log(err);
-		const type = res.headers['content-type'];
-		const length = res.headers['content-length'];
-		console.log(`Downloading: ${uri} (${type}, ${length} bytes)`);
-		request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+async function download(uri, filename) {
+	const response = await axios.get(url, {
+		responseType: 'stream'
 	});
-});
+
+	const type = response.headers['content-type'];
+	const length = response.headers['content-length'];
+	console.log(`Downloading: ${uri} (${type}, ${length} bytes)`);
+
+	const stream = response.data.pipe(fs.createWriteStream(filename));
+
+	await new Promise(resolve => stream.on('close', resolve));
+}
 
 const access = util.promisify(fs.access);
 
