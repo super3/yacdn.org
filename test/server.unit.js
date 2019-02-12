@@ -13,7 +13,11 @@ describe('yacdn', () => {
 	});
 
 	describe('/', () => {
+		it('should redirect to Github', async () => {
+			const response = await axios.get('http://localhost:3000/');
 
+			assert.strictEqual(response.headers.server, 'GitHub.com');
+		});
 	});
 
 	describe('/serve', () => {
