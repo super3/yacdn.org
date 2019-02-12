@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 const crypto = require('crypto');
-const request = require('request');
 const Koa = require('koa');
 const Router = require('koa-router');
 const send = require('koa-send');
@@ -16,7 +15,7 @@ const router = new Router();
 const config = require('./config.js');
 
 async function download(uri, filename) {
-	const response = await axios.get(url, {
+	const response = await axios.get(uri, {
 		responseType: 'stream'
 	});
 
