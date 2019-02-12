@@ -105,6 +105,7 @@ app.use(async ctx => {
 
 app.use(router.routes());
 
+/* istanbul ignore next */
 // Start the server, if running this script alone
 if (require.main === module) {
 	/* istanbul ignore next */
