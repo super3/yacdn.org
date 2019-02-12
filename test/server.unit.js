@@ -36,4 +36,16 @@ describe('yacdn', () => {
 			assert.strictEqual(data, testResult);
 		});
 	});
+
+	describe('/stats', () => {
+		it('should return data of correct types', async () => {
+			const {data} = await axios.get('http://localhost:3000/stats');
+
+			assert.strictEqual(typeof data, 'object');
+			assert.strictEqual(typeof data.cdnHits, 'number');
+			assert.strictEqual(typeof data.cdnData, 'number');
+			assert.strictEqual(typeof data.proxyHits, 'number');
+			assert.strictEqual(typeof data.proxyData, 'number');
+		});
+	});
 });
