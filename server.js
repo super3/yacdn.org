@@ -89,6 +89,7 @@ app.use(async (ctx, next) => {
 app.use(async ctx => {
 	const servePath = '/stats';
 
+	/* istanbul ignore next */
 	if (!ctx.path.startsWith(servePath))
 		return;
 
