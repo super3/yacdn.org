@@ -63,7 +63,7 @@ app.use(async (ctx, next) => {
 		await download(url, path.join(__dirname, filePath));
 	}
 
-	const { size } = await stat(filePath);
+	const {size} = await stat(filePath);
 
 	await redis.incrby('cdndata', size);
 
