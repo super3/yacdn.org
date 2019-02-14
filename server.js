@@ -23,12 +23,15 @@ async function download(uri, filename) {
 	const length = response.headers['content-length'];
 	console.log(`Downloading: ${uri} (${type}, ${length} bytes)`);
 
+	await redis.incrby('download', length);
+
 	const stream = response.data.pipe(fs.createWriteStream(filename));
 
 	await new Promise(resolve => stream.on('close', resolve));
 }
 
 const access = util.promisify(fs.access);
+const stat = util.promisify(fs.stat);
 
 app.use(async (ctx, next) => {
 	if (ctx.path === '/')
@@ -60,6 +63,10 @@ app.use(async (ctx, next) => {
 		await download(url, path.join(__dirname, filePath));
 	}
 
+	const { size } = await stat(filePath);
+
+	await redis.incrby('cdndata', size);
+
 	await send(ctx, filePath);
 	console.log('Served: ' + url);
 });
@@ -80,6 +87,8 @@ app.use(async (ctx, next) => {
 		responseType: 'stream'
 	});
 
+	await redis.incrby('proxydata', response.headers['content-length']);
+
 	ctx.set('Access-Control-Allow-Origin', '*');
 
 	ctx.set('Content-Type', response.headers['content-type']);
@@ -93,14 +102,12 @@ app.use(async ctx => {
 	if (!ctx.path.startsWith(servePath))
 		return;
 
-	const stats = {
+	ctx.body = {
 		cdnHits: Number(await redis.get('cdnhits')),
-		cdnData: 0,
+		cdnData: Number(await redis.get('cdndata')),
 		proxyHits: Number(await redis.get('proxyhits')),
-		proxyData: 0
+		proxyData: Number(await redis.get('proxydata'))
 	};
-
-	ctx.body = stats;
 });
 
 app.use(router.routes());
