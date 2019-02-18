@@ -51,6 +51,9 @@ app.use(async (ctx, next) => {
 	const url = ctx.path.slice(servePath.length);
 	const {ext} = path.parse(url);
 
+	// increment link counter
+	await redis.zincrby('serveurls', 1, url);
+
 	const urlHash = crypto.createHash('sha256')
 		.update(url)
 		.digest('hex');
