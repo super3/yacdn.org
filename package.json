@@ -32,7 +32,7 @@
     "request": "^2.88.0"
   },
   "devDependencies": {
-    "coveralls": "^3.0.2",
+    "coveralls": "^3.0.3",
     "del": "^3.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "jest": "^24.1.0",
