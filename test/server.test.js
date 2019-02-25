@@ -41,7 +41,7 @@ describe('/stats', async () => {
 
 	assert.strictEqual(typeof data, 'object');
 	assert.strictEqual(typeof data.cdnHits, 'number');
-	assert.strictEqual(typeof data.cdnData, 'number');
+	assert.strictEqual(typeof data.cdnData, 'string');
 	assert.strictEqual(typeof data.proxyHits, 'number');
-	assert.strictEqual(typeof data.proxyData, 'number');
+	assert.strictEqual(typeof data.proxyData, 'string');
 });

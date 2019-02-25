@@ -5,7 +5,9 @@ Yet Another CDN.
 [![Coverage Status](https://coveralls.io/repos/github/ovsoinc/yacdn.org/badge.svg?branch=master)](https://coveralls.io/github/ovsoinc/yacdn.org?branch=master)
 [![License](https://img.shields.io/badge/license-AGPLv3-blue.svg?label=license)](https://github.com/Storj/ovsoinc/yacdn.org/blob/master/LICENSE)
 [![CDN Hits](https://img.shields.io/badge/dynamic/json.svg?label=CDN%20Hits&url=https://yacdn.org/stats&query=$.cdnHits&colorB=green)](https://img.shields.io/badge/dynamic/json.svg?label=CDN%20Hits&url=https://yacdn.org/stats&query=$.cdnHits&colorB=green)
+[![CDN Data](https://img.shields.io/badge/dynamic/json.svg?label=CDN%20Data&url=https://yacdn.org/stats&query=$.cdnData&colorB=blue)](https://img.shields.io/badge/dynamic/json.svg?label=CDN%20Data&url=https://yacdn.org/stats&query=$.cdnData&colorB=blue)
 [![Proxy Hits](https://img.shields.io/badge/dynamic/json.svg?label=Proxy%20Hits&url=https://yacdn.org/stats&query=$.proxyHits&colorB=green)](https://img.shields.io/badge/dynamic/json.svg?label=Proxy%20Hits&url=https://yacdn.org/stats&query=$.proxyHits&colorB=green)
+[![Proxy Data](https://img.shields.io/badge/dynamic/json.svg?label=Proxy%20Hits&url=https://yacdn.org/stats&query=$.proxyData&colorB=blue)](https://img.shields.io/badge/dynamic/json.svg?label=Proxy%20Data&url=https://yacdn.org/stats&query=$.proxyData&colorB=blue)
 
 ## CDN
 

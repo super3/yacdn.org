@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run testsuite && npm run linter",
     "testsuite": "jest --forceExit",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec --exit",
+    "coverage": "jest --forceExit --coverage",
     "linter": "xo",
     "start": "node server.js"
   },

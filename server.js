@@ -107,9 +107,9 @@ app.use(async ctx => {
 
 	ctx.body = {
 		cdnHits: Number(await redis.get('cdnhits')),
-		cdnData: Number(await redis.get('cdndata')),
+		cdnData: `${(Number(await redis.get('cdndata')) / Math.pow(1024, 3)).toFixed(2)} GB`,
 		proxyHits: Number(await redis.get('proxyhits')),
-		proxyData: Number(await redis.get('proxydata'))
+		proxyData: `${(Number(await redis.get('proxydata')) / Math.pow(1024, 3)).toFixed(2)} GB`
 	};
 });
 
