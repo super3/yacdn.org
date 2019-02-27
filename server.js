@@ -41,14 +41,19 @@ app.use(async (ctx, next) => {
 });
 
 app.use(async (ctx, next) => {
+	const startTime = Date.now();
+
 	const servePath = '/serve/';
 
 	if (!ctx.path.startsWith(servePath))
 		return next();
 
-	await redis.incr('cdnhits');
+	const n = await redis.incr('cdnhits');
 
 	const url = ctx.path.slice(servePath.length);
+
+	console.log(`serve#${n} url: ${url}`);
+
 	const {ext} = path.parse(url);
 
 	// increment link counter
@@ -58,20 +63,41 @@ app.use(async (ctx, next) => {
 		.update(url)
 		.digest('hex');
 
+	console.log(`serve#${n} url hash: ${urlHash}`);
+
 	const filePath = path.join(config.cacheDir, urlHash) + ext;
+
+	console.log(`serve#${n} file path: ${filePath}`);
 
 	try {
 		await access(filePath);
+		console.log(`serve#${n} already in cache`);
+
+		const age = Date.now() - await redis.zscore('servefiles', urlHash);
+
+		if(age > (1000 * 60 * 60 * 24)) {
+			console.log(`serve#${n} file in cache is too old (${age})`);
+		}
 	} catch (error) {
+		console.log(`serve#${n} not in cache, downloading`);
 		await download(url, path.join(__dirname, filePath));
+
+		await redis.zadd('servefiles', Date.now(), urlHash);
 	}
 
 	const {size} = await stat(filePath);
 
+	console.log(`serve#${n} size: ${(size / (1024 ** 2)).toFixed(2)} MB`);
+
 	await redis.incrby('cdndata', size);
 
 	await send(ctx, filePath);
-	console.log('Served: ' + url);
+
+	const time = Date.now() - startTime;
+	const speed = size / (time / 1000);
+
+	console.log(`serve#${n} done, took ${time}ms`);
+	console.log(`serve#${n} effective speed: ${(speed / (10 ** 6)).toFixed(2)} megabits/s`);
 });
 
 app.use(async (ctx, next) => {
