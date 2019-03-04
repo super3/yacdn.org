@@ -25,8 +25,8 @@ function analyseTimes(times) {
 }
 
 (async () => {
-	const yacdn = process.argv.length > 2 ? process.argv[2] : 'https://yacdn.org';
-	const url = 'http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png';
+	const yacdn = 'https://yacdn.org';
+	const url = process.argv.length > 2 ? process.argv[2] : 'http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png';
 	const hits = 15;
 
 	const nativeUrl = url;
