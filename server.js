@@ -75,7 +75,7 @@ app.use(async (ctx, next) => {
 
 		const age = Date.now() - await redis.zscore('servefiles', urlHash);
 
-		if(age > (1000 * 60 * 60 * 24)) {
+		if (age > (1000 * 60 * 60 * 24)) {
 			console.log(`serve#${n} file in cache is too old (${age})`);
 		}
 	} catch (error) {
@@ -101,7 +101,7 @@ app.use(async (ctx, next) => {
 });
 
 app.use(async (ctx, next) => {
-	const startTime = Date.now();
+	// const startTime = Date.now();
 
 	const servePath = '/proxy/';
 

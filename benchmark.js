@@ -3,7 +3,7 @@ const axios = require('axios');
 async function getTimes(url, limit) {
 	const times = [];
 
-	for(let i = 0; i < limit; i++) {
+	for (let i = 0; i < limit; i++) {
 		const startTime = Date.now();
 
 		await axios.get(url);
@@ -25,7 +25,6 @@ function analyseTimes(times) {
 }
 
 (async () => {
-
 	const yacdn = process.argv.length > 2 ? process.argv[2] : 'https://yacdn.org';
 	const url = 'http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png';
 	const hits = 15;
@@ -56,5 +55,4 @@ function analyseTimes(times) {
 
 	const serveSpeedIncrease = 100 * (1 - (serve.average / native.average));
 	console.log(`yacdn serve is ${serveSpeedIncrease.toFixed(2)}% ${serveSpeedIncrease < 0 ? 'slower' : 'faster'}`);
-
 })();
