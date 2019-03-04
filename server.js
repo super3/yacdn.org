@@ -101,26 +101,37 @@ app.use(async (ctx, next) => {
 });
 
 app.use(async (ctx, next) => {
+	const startTime = Date.now();
+
 	const servePath = '/proxy/';
 
 	if (!ctx.path.startsWith(servePath))
 		return next();
 
-	await redis.incr('proxyhits');
+	const n = await redis.incr('proxyhits');
 
 	const url = ctx.path.slice(servePath.length) + '?' + ctx.querystring;
 
-	console.log(`Proxy: ${url}`);
+	console.log(`proxy#${n} url: ${url}`);
 
 	const response = await axios.get(url, {
 		responseType: 'stream'
 	});
 
-	await redis.incrby('proxydata', response.headers['content-length']);
+	const size = Number(response.headers['content-length']);
+
+	await redis.incrby('proxydata', size);
+
+	console.log(`serve#${n} size: ${(size / (1024 ** 2)).toFixed(2)} MB`);
 
 	ctx.set('Access-Control-Allow-Origin', '*');
 
 	ctx.set('Content-Type', response.headers['content-type']);
+
+	response.data.once('data', () => {
+		console.log(`serve#${n} size: ${(size / (1024 ** 2)).toFixed(2)} MB`);
+	});
+
 	ctx.body = response.data;
 });
 
