@@ -114,7 +114,7 @@ app.use(async (ctx, next) => {
 	const url = ctx.path.slice(servePath.length) + '?' + ctx.querystring;
 
 	console.log(`proxy#${n} url: ${url}`);
-	console.log(`proxy#${n} referer: ${ctx.request.headersreferer}`);
+	console.log(`proxy#${n} referer: ${ctx.request.headers.referer}`);
 
 	const response = await axios.get(url, {
 		responseType: 'stream'
