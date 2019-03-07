@@ -8,8 +8,11 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const send = require('koa-send');
 const axios = require('axios');
-const redis = require('./lib/redis');
 
+const redis = require('./lib/redis');
+const Cache = require('./lib/Cache');
+
+const cache = new Cache();
 const app = new Koa();
 const router = new Router();
 const config = require('./config.js');
@@ -55,47 +58,27 @@ app.use(async (ctx, next) => {
 	console.log(`serve#${n} url: ${url}`);
 	console.log(`serve#${n} referer: ${ctx.request.headers.referer}`);
 
-	const {ext} = path.parse(url);
-
 	// increment link counter
 	await redis.zincrby('serveurls', 1, url);
 
-	const urlHash = crypto.createHash('sha256')
-		.update(url)
-		.digest('hex');
+	const {
+		contentLength,
+		contentType,
+		data
+	} = await cache.retrieve(url);
 
-	console.log(`serve#${n} url hash: ${urlHash}`);
+	console.log(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
 
-	const filePath = path.join(config.cacheDir, urlHash) + ext;
+	ctx.set('Content-Length', contentLength);
+	ctx.set('Content-Type', contentType);
+	ctx.body = data;
 
-	console.log(`serve#${n} file path: ${filePath}`);
-
-	try {
-		await access(filePath);
-		console.log(`serve#${n} already in cache`);
-
-		const age = Date.now() - await redis.zscore('servefiles', urlHash);
-
-		if (age > (1000 * 60 * 60 * 24)) {
-			console.log(`serve#${n} file in cache is too old (${age})`);
-		}
-	} catch (error) {
-		console.log(`serve#${n} not in cache, downloading`);
-		await download(url, path.join(__dirname, filePath));
-
-		await redis.zadd('servefiles', Date.now(), urlHash);
-	}
-
-	const {size} = await stat(filePath);
-
-	console.log(`serve#${n} size: ${(size / (1024 ** 2)).toFixed(2)} MB`);
-
-	await redis.incrby('cdndata', size);
-
-	await send(ctx, filePath);
+	await redis.incrby('cdndata', contentLength);
 
 	const time = Date.now() - startTime;
-	const speed = size / (time / 1000);
+	const speed = contentLength / (time / 1000);
+
+	// await new Promise(resolve => data.once('end', resolve));
 
 	console.log(`serve#${n} done, took ${time}ms`);
 	console.log(`serve#${n} effective speed: ${(speed / (10 ** 6)).toFixed(2)} megabits/s`);

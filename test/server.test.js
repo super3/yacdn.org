@@ -36,7 +36,7 @@ test('/proxy', async () => {
 	assert.strictEqual(data, testResult);
 });
 
-describe('/stats', async () => {
+test('/stats', async () => {
 	const {data} = await axios.get('http://localhost:3000/stats');
 
 	assert.strictEqual(typeof data, 'object');
