@@ -1,13 +1,6 @@
 /* eslint curly: 0 */
-
-const fs = require('fs');
-const path = require('path');
-const util = require('util');
-const crypto = require('crypto');
 const Koa = require('koa');
 const Router = require('koa-router');
-const send = require('koa-send');
-const axios = require('axios');
 
 const redis = require('./lib/redis');
 const Cache = require('./lib/Cache');
@@ -15,26 +8,6 @@ const Cache = require('./lib/Cache');
 const cache = new Cache();
 const app = new Koa();
 const router = new Router();
-const config = require('./config.js');
-
-async function download(uri, filename) {
-	const response = await axios.get(uri, {
-		responseType: 'stream'
-	});
-
-	const type = response.headers['content-type'];
-	const length = response.headers['content-length'];
-	console.log(`Downloading: ${uri} (${type}, ${length} bytes)`);
-
-	await redis.incrby('download', length);
-
-	const stream = response.data.pipe(fs.createWriteStream(filename));
-
-	await new Promise(resolve => stream.on('close', resolve));
-}
-
-const access = util.promisify(fs.access);
-const stat = util.promisify(fs.stat);
 
 app.use(async (ctx, next) => {
 	if (ctx.path === '/')
@@ -92,32 +65,27 @@ app.use(async (ctx, next) => {
 	if (!ctx.path.startsWith(servePath))
 		return next();
 
-	const n = await redis.incr('proxyhits');
-
 	const url = ctx.path.slice(servePath.length) + '?' + ctx.querystring;
+
+	const n = await redis.incr('proxyhits');
 
 	console.log(`proxy#${n} url: ${url}`);
 	console.log(`proxy#${n} referer: ${ctx.request.headers.referer}`);
 
-	const response = await axios.get(url, {
-		responseType: 'stream'
-	});
+	const {
+		contentLength,
+		contentType,
+		data
+	} = await cache.retrieve(url, 0); // max age as 0
 
-	const size = Number(response.headers['content-length']);
+	await redis.incrby('proxydata', contentLength);
 
-	await redis.incrby('proxydata', size);
-
-	console.log(`serve#${n} size: ${(size / (1024 ** 2)).toFixed(2)} MB`);
+	console.log(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
 
 	ctx.set('Access-Control-Allow-Origin', '*');
+	ctx.set('Content-Type', contentType);
 
-	ctx.set('Content-Type', response.headers['content-type']);
-
-	response.data.once('data', () => {
-		console.log(`serve#${n} size: ${(size / (1024 ** 2)).toFixed(2)} MB`);
-	});
-
-	ctx.body = response.data;
+	ctx.body = data;
 });
 
 app.use(async ctx => {

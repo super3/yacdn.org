@@ -1,8 +1,9 @@
 /* global test, beforeAll */
 const assert = require('assert');
 const axios = require('axios');
+const Cache = require('../lib/Cache');
 
-const del = require('del');
+const cache = new Cache();
 
 const testUrl = 'https://gist.githubusercontent.com/super3/06bec2ec29b7588728100df720a4b18d/raw/6cfc71b3f70d85429a737dc01b9441799fec14bd/gistfile1.txt';
 const testResult = 'Hello World!';
@@ -20,7 +21,7 @@ test('/ should redirect to Github', async () => {
 });
 
 test('/serve', async () => {
-	await del(`${__dirname}/../cache/*.*`);
+	await cache.clear();
 
 	const {data} = await axios.get(`http://localhost:3000/serve/${testUrl}`);
 	assert.strictEqual(data, testResult);

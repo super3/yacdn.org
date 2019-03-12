@@ -53,7 +53,8 @@
       "curly": "off",
       "capitalized-comments": "off",
       "no-new": "off",
-      "prefer-rest-params": "off"
+      "prefer-rest-params": "off",
+	  "unicorn/filename-case": ["off", {"case": "camelCase"}]
     }
   },
   "jest": {
