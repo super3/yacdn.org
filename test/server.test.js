@@ -32,6 +32,21 @@ test('/serve', async () => {
 	assert.strictEqual(data, testResult);
 });
 
+test('/serve cache locking', async () => {
+	await cache.clear();
+
+	const promises = [];
+
+	for (let i = 0; i < 20; i++) {
+		promises.push((async () => {
+			const {data} = await axios.get(`http://localhost:3000/serve/${testUrl}`);
+			assert.strictEqual(data, testResult);
+		})());
+	}
+
+	await Promise.all(promises);
+});
+
 test('/proxy', async () => {
 	const {data} = await axios.get(`http://localhost:3000/proxy/${testUrl}`);
 	assert.strictEqual(data, testResult);
