@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-	cacheDir: 'cache/'
+	cacheDir: `cache/`
 };
