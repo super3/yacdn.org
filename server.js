@@ -1,6 +1,7 @@
 /* eslint curly: 0 */
 const Koa = require('koa');
 const Router = require('koa-router');
+const debug = require('debug')('yacdn:server');
 
 const redis = require('./lib/redis');
 const Cache = require('./lib/Cache');
@@ -28,8 +29,8 @@ app.use(async (ctx, next) => {
 
 	const url = ctx.path.slice(servePath.length);
 
-	console.log(`serve#${n} url: ${url}`);
-	console.log(`serve#${n} referer: ${ctx.request.headers.referer}`);
+	debug(`serve#${n} url: ${url}`);
+	debug(`serve#${n} referer: ${ctx.request.headers.referer}`);
 
 	// increment link counter
 	await redis.zincrby('serveurls', 1, url);
@@ -40,7 +41,7 @@ app.use(async (ctx, next) => {
 		data
 	} = await cache.retrieve(url);
 
-	console.log(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
+	debug(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
 
 	ctx.set('Content-Length', contentLength);
 	ctx.set('Content-Type', contentType);
@@ -53,8 +54,8 @@ app.use(async (ctx, next) => {
 
 	// await new Promise(resolve => data.once('end', resolve));
 
-	console.log(`serve#${n} done, took ${time}ms`);
-	console.log(`serve#${n} effective speed: ${(speed / (10 ** 6)).toFixed(2)} megabits/s`);
+	debug(`serve#${n} done, took ${time}ms`);
+	debug(`serve#${n} effective speed: ${(speed / (10 ** 6)).toFixed(2)} megabits/s`);
 });
 
 app.use(async (ctx, next) => {
@@ -69,8 +70,8 @@ app.use(async (ctx, next) => {
 
 	const n = await redis.incr('proxyhits');
 
-	console.log(`proxy#${n} url: ${url}`);
-	console.log(`proxy#${n} referer: ${ctx.request.headers.referer}`);
+	debug(`proxy#${n} url: ${url}`);
+	debug(`proxy#${n} referer: ${ctx.request.headers.referer}`);
 
 	const {
 		contentLength,
@@ -80,7 +81,7 @@ app.use(async (ctx, next) => {
 
 	await redis.incrby('proxydata', contentLength);
 
-	console.log(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
+	debug(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
 
 	ctx.set('Access-Control-Allow-Origin', '*');
 	ctx.set('Content-Type', contentType);
@@ -110,7 +111,7 @@ app.use(router.routes());
 if (require.main === module) {
 	/* istanbul ignore next */
 	app.listen(3000, () => {
-		console.log('Server listening on port 3000...');
+		debug('Server listening on port 3000...');
 	});
 }
 
