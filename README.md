@@ -8,7 +8,8 @@ Yet Another CDN.
 [![CDN Data](https://img.shields.io/badge/dynamic/json.svg?label=CDN%20Data&url=https://yacdn.org/stats&query=$.cdnData&colorB=blue)](https://img.shields.io/badge/dynamic/json.svg?label=CDN%20Data&url=https://yacdn.org/stats&query=$.cdnData&colorB=blue)
 [![Proxy Hits](https://img.shields.io/badge/dynamic/json.svg?label=Proxy%20Hits&url=https://yacdn.org/stats&query=$.proxyHits&colorB=green)](https://img.shields.io/badge/dynamic/json.svg?label=Proxy%20Hits&url=https://yacdn.org/stats&query=$.proxyHits&colorB=green)
 [![Proxy Data](https://img.shields.io/badge/dynamic/json.svg?label=Proxy%20Data&url=https://yacdn.org/stats&query=$.proxyData&colorB=blue)](https://img.shields.io/badge/dynamic/json.svg?label=Proxy%20Data&url=https://yacdn.org/stats&query=$.proxyData&colorB=blue)
-[![Cache Usage](https://img.shields.io/badge/dynamic/json.svg?label=Cache Usage&url=https://yacdn.org/stats&query=$.cacheStorageUsage&colorB=purple)](https://img.shields.io/badge/dynamic/json.svg?label=Cache Usage&url=https://yacdn.org/stats&query=$.cacheStorageUsage&colorB=purple)
+[![Proxy Data](https://img.shields.io/badge/dynamic/json.svg?label=Proxy%20Data&url=https://yacdn.org/stats&query=$.proxyData&colorB=blue)](https://img.shields.io/badge/dynamic/json.svg?label=Proxy%20Data&url=https://yacdn.org/stats&query=$.proxyData&colorB=blue)
+[![Proxy Data](https://img.shields.io/badge/dynamic/json.svg?label=Cache Usage&url=https://yacdn.org/stats&query=$.cacheStorageUsage&colorB=purple)](https://img.shields.io/badge/dynamic/json.svg?label=Cache Usage&url=https://yacdn.org/stats&query=$.cacheStorageUsage&colorB=purple)
 
 ## CDN
 
