@@ -34,3 +34,21 @@ https://yacdn.org/proxy/<uri>
 https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/1464933927_cat_acrobat.png
 ```
 ![https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/1464933927_cat_acrobat.png](https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/1464933927_cat_acrobat.png)
+
+## Technical
+
+### Problems
+
+#### Cache race conditions
+
+##### Saving (fixed)
+
+If two or more requests try to stream to the cache simultaneously, undefined behaviour will happen.
+
+* Solution: [locking system](https://github.com/ovsoinc/yacdn.org/blob/5c5df74279c3aafc17a2f9f6a1ca7efb600cb231/lib/Cache.js#L53)
+
+##### Expiry
+
+If two or more requests try to stream data into the cache while it's full, they could execute a Last Recently Used policy, however this
+
+* Solution: possible locking system although more complex as multiple needed

@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "npm run testsuite && npm run linter",
-    "testsuite": "jest --forceExit",
+    "testsuite": "DEBUG=yacdn:* jest --forceExit",
     "coverage": "jest --forceExit --coverage",
     "linter": "xo",
     "start": "node server.js"
