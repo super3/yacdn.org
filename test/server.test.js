@@ -48,7 +48,7 @@ test('/serve cache locking', async () => {
 });
 
 test('/serve', async () => {
-	const {data} = await axios.get(`http://localhost:3000/serve/${testUrl}`);
+	const {data} = await axios.get(`http://localhost:3000/serve/${testUrl}?maxAge=0`);
 	assert.strictEqual(data, testResult);
 });
 

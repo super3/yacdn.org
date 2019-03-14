@@ -35,11 +35,13 @@ app.use(async (ctx, next) => {
 	// increment link counter
 	await redis.zincrby('serveurls', 1, url);
 
+	const maxAge = typeof ctx.query.maxAge === 'string' ? Number(ctx.query.maxAge) : undefined;
+
 	const {
 		contentLength,
 		contentType,
 		data
-	} = await cache.retrieve(url);
+	} = await cache.retrieve(url, maxAge);
 
 	debug(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
 
