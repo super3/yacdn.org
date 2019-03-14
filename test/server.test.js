@@ -1,7 +1,9 @@
-/* global test, beforeAll */
+/* global jest, test, beforeAll */
 const assert = require('assert');
 const axios = require('axios');
 const Cache = require('../lib/Cache');
+
+jest.setTimeout(1000 * 10);
 
 const cache = new Cache();
 
