@@ -83,7 +83,7 @@ app.use(async (ctx, next) => {
 
 	await redis.incrby('proxydata', contentLength);
 
-	debug(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
+	debug(`proxy#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
 
 	ctx.set('Access-Control-Allow-Origin', '*');
 	ctx.set('Content-Type', contentType);
