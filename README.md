@@ -37,6 +37,28 @@ https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/14649339
 
 ## Technical
 
+### Running
+
+```
+$ DEBUG=yacdn:* node server
+  yacdn:server Server listening on port 3000... +0ms
+  yacdn:server serve#205 url: http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png +5s
+  yacdn:server serve#205 referer: undefined +1ms
+  yacdn:cache http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png not in cache +0ms
+  yacdn:cache lock true +0ms
+  yacdn:server serve#205 size: 0.02 MB +398ms
+  yacdn:server serve#205 done, took 404ms +5ms
+  yacdn:server serve#205 effective speed: 0.04 megabits/s +0ms
+  yacdn:server serve#206 url: http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png +5s
+  yacdn:server serve#206 referer: undefined +0ms
+  yacdn:cache http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png already in cache +5s
+  yacdn:server serve#206 size: 0.02 MB +2ms
+  yacdn:server serve#206 done, took 2ms +0ms
+  yacdn:server serve#206 effective speed: 8.64 megabits/s +0ms
+
+
+```
+
 ### Problems
 
 #### Cache race conditions
