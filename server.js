@@ -21,9 +21,13 @@ app.use(async (ctx, next) => {
 	const startTime = Date.now();
 
 	const servePath = '/serve/';
+	const proxyPath = '/proxy/';
 
-	if (!ctx.path.startsWith(servePath))
+	if ((!ctx.path.startsWith(servePath)) && (!ctx.path.startsWith(proxyPath))) {
 		return next();
+	}
+
+	const route = ctx.path.startsWith(servePath) ? 'serve' : 'proxy';
 
 	const n = await redis.incr('cdnhits');
 
@@ -35,7 +39,8 @@ app.use(async (ctx, next) => {
 	// increment link counter
 	await redis.zincrby('serveurls', 1, url);
 
-	const maxAge = typeof ctx.query.maxAge === 'string' ? Number(ctx.query.maxAge) : undefined;
+	const defaultMaxAge = route === 'serve' ? 24 * 60 * 60 * 1000 : 0;
+	const maxAge = typeof ctx.query.maxAge === 'string' ? Number(ctx.query.maxAge) : defaultMaxAge;
 
 	const {
 		contentLength,
@@ -58,37 +63,6 @@ app.use(async (ctx, next) => {
 
 	debug(`serve#${n} done, took ${time}ms`);
 	debug(`serve#${n} effective speed: ${(speed / (10 ** 6)).toFixed(2)} megabits/s`);
-});
-
-app.use(async (ctx, next) => {
-	// const startTime = Date.now();
-
-	const servePath = '/proxy/';
-
-	if (!ctx.path.startsWith(servePath))
-		return next();
-
-	const url = ctx.path.slice(servePath.length) + '?' + ctx.querystring;
-
-	const n = await redis.incr('proxyhits');
-
-	debug(`proxy#${n} url: ${url}`);
-	debug(`proxy#${n} referer: ${ctx.request.headers.referer}`);
-
-	const {
-		contentLength,
-		contentType,
-		data
-	} = await cache.retrieve(url, 0); // max age as 0
-
-	await redis.incrby('proxydata', contentLength);
-
-	debug(`proxy#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
-
-	ctx.set('Access-Control-Allow-Origin', '*');
-	ctx.set('Content-Type', contentType);
-
-	ctx.body = data;
 });
 
 app.use(async ctx => {
