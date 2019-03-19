@@ -11,8 +11,23 @@ Yet Another CDN.
 ## CDN
 
 #### How to Use
+
+With a default maximum file age of 24 hours.
+
 ```
-https://yacdn.org/serve/<uri>?maxAge
+https://yacdn.org/serve/<uri>
+```
+
+This can also be set manually.
+
+```
+https://yacdn.org/serve/<uri>?maxAge=[milliseconds]
+```
+
+Use `maxAge=0` for an effective proxy passthrough.
+
+```
+https://yacdn.org/serve/<uri>?maxAge=0
 ```
 
 #### Example
