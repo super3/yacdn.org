@@ -35,8 +35,6 @@ test('/serve', async () => {
 });
 
 test('/serve cache locking', async () => {
-	await cache.clear();
-
 	const promises = [];
 
 	for (let i = 0; i < 20; i++) {
