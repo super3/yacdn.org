@@ -75,8 +75,6 @@ app.use(async ctx => {
 	ctx.body = {
 		cdnHits: Number(await redis.get('cdnhits')),
 		cdnData: `${(Number(await redis.get('cdndata')) / (1024 ** 3)).toFixed(2)} GB`,
-		proxyHits: Number(await redis.get('proxyhits')),
-		proxyData: `${(Number(await redis.get('proxydata')) / (1024 ** 3)).toFixed(2)} GB`,
 		cacheStorageUsage: `${(Number(await redis.get('cache-storage-usage')) / (1024 ** 3)).toFixed(2)} GB`
 	};
 });
