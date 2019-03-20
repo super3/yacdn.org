@@ -24,23 +24,18 @@ This can also be set manually.
 https://yacdn.org/serve/<uri>?maxAge=[seconds]
 ```
 
-Use `maxAge=0` for an effective proxy passthrough.
-
-```
-https://yacdn.org/serve/<uri>?maxAge=0
-```
-
 #### Example
 ```
 https://yacdn.org/serve/http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png
 ```
 ![https://yacdn.org/serve/http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png](https://yacdn.org/serve/http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png)
 
-## Proxy - depreciated
+## Proxy / CORS Proxy
 
 #### How to Use
+
 ```
-https://yacdn.org/proxy/<uri>
+https://yacdn.org/serve/<uri>?maxAge=0
 ```
 
 #### Example
