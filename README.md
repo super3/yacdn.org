@@ -21,7 +21,7 @@ https://yacdn.org/serve/<uri>
 This can also be set manually.
 
 ```
-https://yacdn.org/serve/<uri>?maxAge=[milliseconds]
+https://yacdn.org/serve/<uri>?maxAge=[seconds]
 ```
 
 Use `maxAge=0` for an effective proxy passthrough.
