@@ -64,8 +64,6 @@ $ DEBUG=yacdn:* node server
   yacdn:server serve#206 size: 0.02 MB +2ms
   yacdn:server serve#206 done, took 2ms +0ms
   yacdn:server serve#206 effective speed: 8.64 megabits/s +0ms
-
-
 ```
 
 ### Problems
