@@ -12,13 +12,13 @@ Yet Another CDN.
 
 #### How to Use
 
-With a default maximum file age of 24 hours.
+By default the file will be kept in the cache for 24 hours.
 
 ```
 https://yacdn.org/serve/<uri>
 ```
 
-This can also be set manually.
+Need to refresh the object more frequently than 24 hours? You can set `maxAge` manually:
 
 ```
 https://yacdn.org/serve/<uri>?maxAge=[seconds]
@@ -32,10 +32,12 @@ https://yacdn.org/serve/http://meowbaari.com/wp-content/uploads/2016/06/14649336
 
 ## Proxy / CORS Proxy
 
+Can also be used as an effective proxy / CORS proxy by using the proxy endpoint.
+
 #### How to Use
 
 ```
-https://yacdn.org/serve/<uri>?maxAge=0
+https://yacdn.org/proxy/<uri>
 ```
 
 #### Example
@@ -65,19 +67,3 @@ $ DEBUG=yacdn:* node server
   yacdn:server serve#206 done, took 2ms +0ms
   yacdn:server serve#206 effective speed: 8.64 megabits/s +0ms
 ```
-
-### Problems
-
-#### Cache race conditions
-
-##### Saving (fixed)
-
-If two or more requests try to stream to the cache simultaneously, undefined behaviour will happen.
-
-* Solution: [locking system](https://github.com/ovsoinc/yacdn.org/blob/5c5df74279c3aafc17a2f9f6a1ca7efb600cb231/lib/Cache.js#L53)
-
-##### Expiry
-
-If two or more requests try to stream data into the cache while it's full, they could execute a Last Recently Used policy, however this
-
-* Solution: possible locking system although more complex as multiple needed
