@@ -40,7 +40,7 @@ app.use(async (ctx, next) => {
 	await redis.zincrby('serveurls', 1, url);
 
 	const defaultMaxAge = route === 'serve' ? 24 * 60 * 60 * 1000 : 0;
-	const maxAge = route === 'proxy' && typeof ctx.query.maxAge === 'string' ? Number(ctx.query.maxAge) * 1000 : defaultMaxAge;
+	const maxAge = route === 'serve' && typeof ctx.query.maxAge === 'string' ? Number(ctx.query.maxAge) * 1000 : defaultMaxAge;
 
 	const {
 		contentLength,
