@@ -31,7 +31,7 @@ app.use(async (ctx, next) => {
 
 	const n = await redis.incr('cdnhits');
 
-	const url = ctx.path.slice(servePath.length);
+	const url = `${ctx.path.slice(servePath.length)}?${ctx.querystring}`;
 
 	debug(`serve#${n} url: ${url}`);
 	debug(`serve#${n} referer: ${ctx.request.headers.referer}`);
