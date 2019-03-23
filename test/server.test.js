@@ -35,6 +35,9 @@ test('/serve', async () => {
 });
 
 test('/serve cache locking', async () => {
+	// wait for files to be older than 1s
+	await new Promise(resolve => setTimeout(resolve, 1000));
+
 	const promises = [];
 
 	for (let i = 0; i < 20; i++) {
