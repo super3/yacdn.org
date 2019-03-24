@@ -50,6 +50,7 @@ app.use(async (ctx, next) => {
 
 	debug(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
 
+	ctx.set('Access-Control-Allow-Origin', '*');
 	ctx.set('Content-Length', contentLength);
 	ctx.set('Content-Type', contentType);
 	ctx.body = data;
