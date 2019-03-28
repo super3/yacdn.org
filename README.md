@@ -67,3 +67,26 @@ $ DEBUG=yacdn:* node server
   yacdn:server serve#206 done, took 2ms +0ms
   yacdn:server serve#206 effective speed: 8.64 megabits/s +0ms
 ```
+
+### Benchmarking
+
+```cmd
+> node benchmark.js https://speed.hetzner.de/100MB.bin
+https://speed.hetzner.de/100MB.bin - took 32958 ms
+https://speed.hetzner.de/100MB.bin - took 56222 ms
+https://speed.hetzner.de/100MB.bin - took 40457 ms
+Took 43212ms on average (min: 32958ms, max: 56222ms)
+
+https://yacdn.org/proxy/https://speed.hetzner.de/100MB.bin - took 21116 ms
+https://yacdn.org/proxy/https://speed.hetzner.de/100MB.bin - took 19269 ms
+https://yacdn.org/proxy/https://speed.hetzner.de/100MB.bin - took 20951 ms
+Took 20445ms on average (min: 19269ms, max: 21116ms)
+
+https://yacdn.org/serve/https://speed.hetzner.de/100MB.bin - took 25699 ms
+https://yacdn.org/serve/https://speed.hetzner.de/100MB.bin - took 23810 ms
+https://yacdn.org/serve/https://speed.hetzner.de/100MB.bin - took 19544 ms
+Took 23018ms on average (min: 19544ms, max: 25699ms)
+
+yacdn proxy is 52.69% faster
+yacdn serve is 46.73% faster
+```
