@@ -1,4 +1,4 @@
-/* global jest, test, beforeAll */
+/* global jest, test */
 const assert = require('assert');
 const Cache = require('../lib/Cache');
 
@@ -13,7 +13,7 @@ const fiveByteFile = 'https://gist.githubusercontent.com/montyanderson/2a07b9ae6
 test('should store correct amount of items', async () => {
 	const items = 20;
 
-	for(let i = 0; i < items; i++) {
+	for (let i = 0; i < items; i++) {
 		console.log(i);
 		await cache.retrieve(`${singleByteFileUrl}?${i}`);
 	}
