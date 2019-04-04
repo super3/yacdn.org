@@ -16,7 +16,7 @@ const blacklist = (() => {
 		const file = fs.readFileSync(`${__dirname}/blacklist.txt`, 'utf8');
 
 		return file.trim().split('\n');
-	} catch(error) {
+	} catch (error) {
 		return [];
 	}
 })();
