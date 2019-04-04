@@ -3,7 +3,7 @@ const assert = require('assert');
 const axios = require('axios');
 const Cache = require('../lib/Cache');
 
-jest.setTimeout(1000 * 10);
+jest.setTimeout(1000 * 20);
 
 const cache = new Cache();
 

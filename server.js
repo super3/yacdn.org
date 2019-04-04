@@ -1,4 +1,5 @@
 /* eslint curly: 0 */
+const fs = require('fs');
 const Koa = require('koa');
 const Router = require('koa-router');
 const debug = require('debug')('yacdn:server');
@@ -9,6 +10,18 @@ const Cache = require('./lib/Cache');
 const cache = new Cache();
 const app = new Koa();
 const router = new Router();
+
+const blacklist = (() => {
+	try {
+		const file = fs.readFileSync(`${__dirname}/blacklist.txt`, 'utf8');
+
+		return file.trim().split('\n');
+	} catch(error) {
+		return [];
+	}
+})();
+
+debug('blacklist', blacklist);
 
 app.use(async (ctx, next) => {
 	if (ctx.path === '/')

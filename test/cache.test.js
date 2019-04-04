@@ -4,7 +4,7 @@ const Cache = require('../lib/Cache');
 
 const cache = new Cache(undefined, undefined, 20);
 
-jest.setTimeout(10 * 1000);
+jest.setTimeout(1000 * 20);
 
 const singleByteFileUrl = 'https://gist.githubusercontent.com/montyanderson/2a07b9ae6a24811720a8fc1d7d3eb20c/raw/338c471cae1e8ad780c2a15cf1f04cd357c40c3b/single-byte-file.txt';
 

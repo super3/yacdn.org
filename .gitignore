@@ -59,3 +59,6 @@ typings/
 
 # cache directory
 cache/*.*
+
+# domain blacklist
+blacklist.txt
