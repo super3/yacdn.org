@@ -1,5 +1,6 @@
 /* eslint curly: 0 */
 const fs = require('fs');
+const {URL} = require('url');
 const Koa = require('koa');
 const Router = require('koa-router');
 const debug = require('debug')('yacdn:server');
@@ -48,6 +49,12 @@ app.use(async (ctx, next) => {
 
 	debug(`serve#${n} url: ${url}`);
 	debug(`serve#${n} referer: ${ctx.request.headers.referer}`);
+
+	const {hostname} = new URL(ctx.request.headers.referer);
+
+	if (blacklist.includes(hostname)) {
+		throw new Error('Hostname on blacklist');
+	}
 
 	// increment link counter
 	await redis.zincrby('serveurls', 1, url);
