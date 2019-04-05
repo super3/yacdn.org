@@ -34,6 +34,17 @@ test('/serve', async () => {
 	assert.strictEqual(data, testResult);
 });
 
+test('/serve', async () => {
+	await assert.rejects(async () => {
+		await axios.get(`http://localhost:3000/serve/${testUrl}`, {
+			headers: {
+				Referrer: 'https://blacklist-test.net/'
+			}
+		});
+	});
+});
+
+
 test('/serve cache locking', async () => {
 	// wait for files to be older than 1s
 	await new Promise(resolve => setTimeout(resolve, 1000));
