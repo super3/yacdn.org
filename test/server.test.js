@@ -35,6 +35,8 @@ test('/serve', async () => {
 });
 
 test('/serve', async () => {
+	fs.writeFileSync(`${__dirname}/../blacklist.txt`, 'blacklist-test.net');
+
 	await assert.rejects(async () => {
 		await axios.get(`http://localhost:3000/serve/${testUrl}`, {
 			headers: {
