@@ -16,7 +16,7 @@ const blacklist = (() => {
 	try {
 		const file = fs.readFileSync(`${__dirname}/blacklist.txt`, 'utf8');
 
-		return file.trim().split('\n');
+		return file.trim().split('\n').filter(domain => domain.length > 0);
 	} catch (error) {
 		return [];
 	}
@@ -50,10 +50,14 @@ app.use(async (ctx, next) => {
 	debug(`serve#${n} url: ${url}`);
 	debug(`serve#${n} referer: ${ctx.request.headers.referer}`);
 
-	const {hostname} = new URL(ctx.request.headers.referer);
+	if(typeof ctx.request.headers.referer === 'string') {
+		const {hostname} = new URL(ctx.request.headers.referer);
 
-	if (blacklist.includes(hostname)) {
-		throw new Error('Hostname on blacklist');
+		debug('hostname', hostname, blacklist);
+
+		if (blacklist.includes(hostname)) {
+			throw new Error('Hostname on blacklist');
+		}
 	}
 
 	// increment link counter

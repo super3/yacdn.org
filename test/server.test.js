@@ -1,4 +1,5 @@
 /* global jest, test, beforeAll */
+const fs = require('fs');
 const assert = require('assert');
 const axios = require('axios');
 const Cache = require('../lib/Cache');
@@ -10,11 +11,27 @@ const cache = new Cache();
 const testUrl = 'https://gist.githubusercontent.com/super3/06bec2ec29b7588728100df720a4b18d/raw/6cfc71b3f70d85429a737dc01b9441799fec14bd/gistfile1.txt';
 const testResult = 'Hello World!';
 
+fs.writeFileSync(`${__dirname}/../blacklist.txt`, 'blacklist-test.net');
+
 const app = require('../server');
 
 beforeAll(async () =>
 	new Promise(resolve => app.listen(3000, resolve))
 );
+
+test('/serve reject on blacklisted domain', async () => {
+	try {
+		await axios.get(`http://localhost:3000/serve/${testUrl}`, {
+			headers: {
+				Referer: 'https://blacklist-test.net/'
+			}
+		});
+	} catch(error) {
+		return;
+	}
+
+	throw new Error('Request didn\'t fail');
+});
 
 test('/ should redirect to Github', async () => {
 	const response = await axios.get('http://localhost:3000/');
@@ -33,19 +50,6 @@ test('/serve', async () => {
 	const {data} = await axios.get(`http://localhost:3000/serve/${testUrl}`);
 	assert.strictEqual(data, testResult);
 });
-
-test('/serve', async () => {
-	fs.writeFileSync(`${__dirname}/../blacklist.txt`, 'blacklist-test.net');
-
-	await assert.rejects(async () => {
-		await axios.get(`http://localhost:3000/serve/${testUrl}`, {
-			headers: {
-				Referrer: 'https://blacklist-test.net/'
-			}
-		});
-	});
-});
-
 
 test('/serve cache locking', async () => {
 	// wait for files to be older than 1s
