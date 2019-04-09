@@ -25,6 +25,15 @@ const blacklist = (() => {
 debug('blacklist', blacklist);
 
 app.use(async (ctx, next) => {
+	try {
+		await next();
+	} catch(error) {
+		ctx.status = 500;
+		ctx.body = "Internal Server Error";
+	}
+});
+
+app.use(async (ctx, next) => {
 	if (ctx.path === '/')
 		return ctx.redirect('https://ovsoinc.github.io/yacdn.org');
 
