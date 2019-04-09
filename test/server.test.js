@@ -26,7 +26,7 @@ test('/serve reject on blacklisted domain', async () => {
 				Referer: 'https://blacklist-test.net/'
 			}
 		});
-	} catch(error) {
+	} catch (error) {
 		return;
 	}
 

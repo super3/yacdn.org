@@ -27,9 +27,9 @@ debug('blacklist', blacklist);
 app.use(async (ctx, next) => {
 	try {
 		await next();
-	} catch(error) {
+	} catch (error) {
 		ctx.status = 500;
-		ctx.body = "Internal Server Error";
+		ctx.body = 'Internal Server Error';
 	}
 });
 
@@ -59,7 +59,7 @@ app.use(async (ctx, next) => {
 	debug(`serve#${n} url: ${url}`);
 	debug(`serve#${n} referer: ${ctx.request.headers.referer}`);
 
-	if(typeof ctx.request.headers.referer === 'string') {
+	if (typeof ctx.request.headers.referer === 'string') {
 		const {hostname} = new URL(ctx.request.headers.referer);
 
 		debug('hostname', hostname, blacklist);
