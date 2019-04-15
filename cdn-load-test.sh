@@ -10,7 +10,7 @@ do
         for SIZE in $(echo $FILESIZES | sed "s/,/ /g");
         do
                 echo "Downloading $FILE"
-                wget https://yacdn.org/$1/http://speedtest.tele2.net/$SIZE.zip -O $WORKDIR/file.bin
+                wget -q https://yacdn.org/$1/http://speedtest.tele2.net/$SIZE.zip -O $WORKDIR/file.bin
                 rm $WORKDIR/file.bin
         done
 done
