@@ -9,8 +9,12 @@ for i in `seq 1 $2`;
 do
         for SIZE in $(echo $FILESIZES | sed "s/,/ /g");
         do
-                echo "Downloading $FILE"
+                echo "Downloading $SIZE"
+                START=$(date +%s.%N)
                 wget -q https://yacdn.org/$1/http://speedtest.tele2.net/$SIZE.zip -O $WORKDIR/file.bin
+                END=$(date +%s.%N)
+                DIFF=$(echo "$END - $START" | bc)
+                echo "Downloaded $SIZE in $DIFF s"
                 rm $WORKDIR/file.bin
         done
 done
