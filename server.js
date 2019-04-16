@@ -13,13 +13,9 @@ const app = new Koa();
 const router = new Router();
 
 const blacklist = (() => {
-	try {
-		const file = fs.readFileSync(`${__dirname}/blacklist.txt`, 'utf8');
+	const file = fs.readFileSync(`${__dirname}/blacklist.txt`, 'utf8');
 
-		return file.trim().split('\n').filter(domain => domain.length > 0);
-	} catch (error) {
-		return [];
-	}
+	return file.trim().split('\n').filter(domain => domain.length > 0);
 })();
 
 debug('blacklist', blacklist);
