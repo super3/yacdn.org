@@ -32,3 +32,16 @@ it('should delete the correct amount of items', async () => {
 	assert.strictEqual(await cache.getItems(), 16);
 	assert.strictEqual(await cache.getStorageUsage(), 20);
 });
+
+it('should handle race conditions properly', async () => {
+	await Promise.all([
+		await cache.retrieve(`${fiveByteFile}?2`),
+		await cache.retrieve(`${fiveByteFile}?3`),
+		await cache.retrieve(`${fiveByteFile}?4`)
+	]);
+
+	await new Promise(resolve => setTimeout(resolve, 1000));
+
+	assert.strictEqual(await cache.getItems(), 4);
+	assert.strictEqual(await cache.getStorageUsage(), 20);
+});
