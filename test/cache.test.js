@@ -35,10 +35,10 @@ it('should delete the correct amount of items', async () => {
 
 it('should handle race conditions properly', async () => {
 	await Promise.all([
-		await cache.retrieve(`${fiveByteFile}?2`),
-		await cache.retrieve(`${fiveByteFile}?3`),
-		await cache.retrieve(`${fiveByteFile}?4`),
-		await cache.retrieve(`${fiveByteFile}?5`)
+		cache.retrieve(`${fiveByteFile}?2`),
+		cache.retrieve(`${fiveByteFile}?3`),
+		cache.retrieve(`${fiveByteFile}?4`),
+		cache.retrieve(`${fiveByteFile}?5`)
 	]);
 
 	await new Promise(resolve => setTimeout(resolve, 1000));
