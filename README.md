@@ -51,6 +51,10 @@ https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/14649339
 ### Running
 
 ```
+$ touch blacklist.txt
+```
+
+```
 $ DEBUG=yacdn:* node server
   yacdn:server Server listening on port 3000... +0ms
   yacdn:server serve#205 url: http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png +5s
