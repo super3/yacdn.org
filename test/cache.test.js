@@ -1,4 +1,5 @@
 /* global jest, test */
+const fs = require('fs');
 const assert = require('assert');
 const Cache = require('../lib/Cache');
 
@@ -50,4 +51,14 @@ it('should handle race conditions properly', async () => {
 
 	assert.strictEqual(await cache.getItems(), 4);
 	assert.strictEqual(await cache.getStorageUsage(), 20);
+});
+
+it('should handle already open files', async () => {
+	await cache.clear();
+
+	fs.createWriteStream(`${__dirname}/../cache/471624bbbd71e1a5783e5cdfcdb96ba302f8b7de0df609c42bd7e0d1ee1456f7.bin`);
+
+	await new Promise(resolve => setTimeout(resolve, 1000));
+
+	await cache.retrieve(fiveByteFile);
 });
