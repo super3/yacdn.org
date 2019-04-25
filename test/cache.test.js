@@ -11,11 +11,14 @@ const singleByteFileUrl = 'https://gist.githubusercontent.com/montyanderson/2a07
 const fiveByteFile = 'https://gist.githubusercontent.com/montyanderson/2a07b9ae6a24811720a8fc1d7d3eb20c/raw/d594d6d329717378f5d6abc8489741fb7b061f6f/five-byte-file.txt';
 
 test('should store correct amount of items', async () => {
+	await cache.clear();
+
 	const items = 20;
 
 	for (let i = 0; i < items; i++) {
 		console.log(i);
 		await cache.retrieve(`${singleByteFileUrl}?${i}`);
+		await new Promise(resolve => setTimeout(resolve, 100));
 	}
 
 	await new Promise(resolve => setTimeout(resolve, 1000));
@@ -34,11 +37,13 @@ it('should delete the correct amount of items', async () => {
 });
 
 it('should handle race conditions properly', async () => {
+	await cache.clear();
+
 	await Promise.all([
+		cache.retrieve(`${fiveByteFile}?1`),
 		cache.retrieve(`${fiveByteFile}?2`),
 		cache.retrieve(`${fiveByteFile}?3`),
-		cache.retrieve(`${fiveByteFile}?4`),
-		cache.retrieve(`${fiveByteFile}?5`)
+		cache.retrieve(`${fiveByteFile}?4`)
 	]);
 
 	await new Promise(resolve => setTimeout(resolve, 1000));
