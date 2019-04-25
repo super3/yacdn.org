@@ -3,6 +3,10 @@
 		name: "yacdn",
 		script: "server.js",
 		max_memory_restart: "256M",
-		watch: false
+		watch: false,
+		env: {
+			NODE_ENV: "production",
+			DEBUG: "yacdn:*"
+		},
 	}]
 }
