@@ -2,9 +2,14 @@ apt-get install build-essential
 cd ~
 wget http://download.redis.io/releases/redis-5.0.4.tar.gz
 tar xvfs redis-5.0.4.tar.gz
-cd redis-5.0.4
+cd redis-5.0.4;
 make
 make install
+REDIS_PORT=1234 \
+ 		 REDIS_CONFIG_FILE=/etc/redis/1234.conf \
+ 		 REDIS_LOG_FILE=/var/log/redis_1234.log \
+ 		 REDIS_DATA_DIR=/var/lib/redis/1234 \
+ 		 REDIS_EXECUTABLE=`command -v redis-server` ./utils/install_server.sh
 ./utils/install_server.sh
 cd ../
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
