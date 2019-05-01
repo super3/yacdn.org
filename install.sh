@@ -1,4 +1,4 @@
-apt-get install build-essential
+apt-get install build-essential nginx -y
 cd ~
 wget http://download.redis.io/releases/redis-5.0.4.tar.gz
 tar xvfs redis-5.0.4.tar.gz
