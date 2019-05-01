@@ -1,4 +1,4 @@
-apt-get install build-essential nginx -y
+apt-get install build-essential
 cd ~
 wget http://download.redis.io/releases/redis-5.0.4.tar.gz
 tar xvfs redis-5.0.4.tar.gz
@@ -23,3 +23,6 @@ cd yacdn.org
 pm2 start process.json
 pm2 save
 pm2 startup
+apt-get install nginx -y
+curl -o - https://raw.githubusercontent.com/ovsoinc/yacdn.org/master/nginx.conf > /etc/nginx/sites-available/default
+service nginx reload
