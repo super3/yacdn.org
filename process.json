@@ -2,7 +2,7 @@
 	apps: [{
 		name: "yacdn",
 		script: "server.js",
-		max_memory_restart: "256M",
+		max_memory_restart: "2048M",
 		watch: false,
 		env: {
 			NODE_ENV: "production",
