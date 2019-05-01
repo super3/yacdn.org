@@ -48,6 +48,18 @@ https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/14649339
 
 ## Technical
 
+### Setup
+
+Work in progress. Run as root.
+
+```
+> curl -o - https://raw.githubusercontent.com/ovsoinc/yacdn.org/master/install.sh | bash
+```
+
+```
+> certbot --nginx
+```
+
 ### Running
 
 ```cmd
