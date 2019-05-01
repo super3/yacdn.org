@@ -1,12 +1,89 @@
 {
 	apps: [{
-		name: "yacdn",
+		name: "yacdn-1",
 		script: "server.js",
 		max_memory_restart: "256M",
 		watch: false,
 		env: {
 			NODE_ENV: "production",
-			DEBUG: "yacdn:*"
+			DEBUG: "yacdn:*",
+			PORT: 3001
+		},
+	},
+	{
+		name: "yacdn-2",
+		script: "server.js",
+		max_memory_restart: "256M",
+		watch: false,
+		env: {
+			NODE_ENV: "production",
+			DEBUG: "yacdn:*",
+			PORT: 3002
+		},
+	},
+	{
+		name: "yacdn-3",
+		script: "server.js",
+		max_memory_restart: "256M",
+		watch: false,
+		env: {
+			NODE_ENV: "production",
+			DEBUG: "yacdn:*",
+			PORT: 3003
+		},
+	},
+	{
+		name: "yacdn-4",
+		script: "server.js",
+		max_memory_restart: "256M",
+		watch: false,
+		env: {
+			NODE_ENV: "production",
+			DEBUG: "yacdn:*",
+			PORT: 3004
+		},
+	},
+	{
+		name: "yacdn-5",
+		script: "server.js",
+		max_memory_restart: "256M",
+		watch: false,
+		env: {
+			NODE_ENV: "production",
+			DEBUG: "yacdn:*",
+			PORT: 3005
+		},
+	},
+	{
+		name: "yacdn-6",
+		script: "server.js",
+		max_memory_restart: "256M",
+		watch: false,
+		env: {
+			NODE_ENV: "production",
+			DEBUG: "yacdn:*",
+			PORT: 3006
+		},
+	},
+	{
+		name: "yacdn-7",
+		script: "server.js",
+		max_memory_restart: "256M",
+		watch: false,
+		env: {
+			NODE_ENV: "production",
+			DEBUG: "yacdn:*",
+			PORT: 3007
+		},
+	},{
+		name: "yacdn-8",
+		script: "server.js",
+		max_memory_restart: "256M",
+		watch: false,
+		env: {
+			NODE_ENV: "production",
+			DEBUG: "yacdn:*",
+			PORT: 3008
 		},
 	}]
 }

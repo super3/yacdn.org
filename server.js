@@ -113,10 +113,12 @@ app.use(router.routes());
 
 /* istanbul ignore next */
 // Start the server, if running this script alone
+const port = process.env.PORT || 3000;
+
 if (require.main === module) {
 	/* istanbul ignore next */
-	app.listen(3000, () => {
-		debug('Server listening on port 3000...');
+	app.listen(port, () => {
+		debug(`Server listening on port ${port}...`);
 	});
 }
 
