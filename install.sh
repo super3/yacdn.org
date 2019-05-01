@@ -1,4 +1,4 @@
-apt-get install build-essential
+apt-get install build-essential -y
 cd ~
 wget http://download.redis.io/releases/redis-5.0.4.tar.gz
 tar xvfs redis-5.0.4.tar.gz
@@ -18,11 +18,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 nvm install node
 npm install -g pm2
+apt-get install -y git
 git clone https://github.com/ovsoinc/yacdn.org
 cd yacdn.org
 pm2 start process.json
 pm2 save
 pm2 startup
 apt-get install nginx -y
-curl -o - https://raw.githubusercontent.com/ovsoinc/yacdn.org/master/nginx.conf > /etc/nginx/sites-available/default
-service nginx reload
