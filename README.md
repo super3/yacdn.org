@@ -52,11 +52,11 @@ https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/14649339
 
 Work in progress. Run as root.
 
-```
+```cmd
 > curl -o - https://raw.githubusercontent.com/ovsoinc/yacdn.org/master/install.sh | bash
 ```
 
-```
+```cmd
 > certbot --nginx
 ```
 
