@@ -39,4 +39,3 @@ add-apt-repository universe -y;
 add-apt-repository ppa:certbot/certbot -y;
 apt-get update -y;
 apt-get install certbot python-certbot-nginx -y;
-certbot --nginx;
