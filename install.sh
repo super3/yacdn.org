@@ -30,6 +30,7 @@ apt-get install -y git;
 git clone https://github.com/ovsoinc/yacdn.org;
 cd $HOME/yacdn.org;
 npm install;
+touch blacklist.txt;
 pm2 start process.json;
 pm2 save;
 pm2 startup;
