@@ -8,7 +8,9 @@
     "testsuite": "DEBUG=yacdn:* jest --forceExit",
     "coverage": "jest --forceExit --coverage",
     "linter": "xo",
-    "start": "node server.js"
+    "start": "node server.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -30,7 +32,8 @@
     "koa-send": "^5.0.0",
     "mime-types": "^2.1.24",
     "nodemon": "^1.19.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "snyk": "^1.161.1"
   },
   "devDependencies": {
     "coveralls": "^3.0.3",
@@ -54,10 +57,16 @@
       "capitalized-comments": "off",
       "no-new": "off",
       "prefer-rest-params": "off",
-	  "unicorn/filename-case": ["off", {"case": "camelCase"}]
+      "unicorn/filename-case": [
+        "off",
+        {
+          "case": "camelCase"
+        }
+      ]
     }
   },
   "jest": {
     "testEnvironment": "node"
-  }
+  },
+  "snyk": true
 }
