@@ -7,6 +7,7 @@ const debug = require('debug')('yacdn:server');
 
 const redis = require('./lib/redis');
 const Cache = require('./lib/Cache');
+const nodes = require('./nodes');
 
 const cache = new Cache();
 const app = new Koa();
@@ -95,12 +96,12 @@ app.use(async (ctx, next) => {
 	debug(`serve#${n} effective speed: ${(speed / (10 ** 6)).toFixed(2)} megabits/s`);
 });
 
-app.use(async ctx => {
+app.use(async (ctx, next) => {
 	const servePath = '/stats';
 
 	/* istanbul ignore next */
 	if (!ctx.path.startsWith(servePath))
-		return;
+		return next();
 
 	ctx.body = {
 		cdnHits: Number(await redis.get('cdnhits')),
@@ -108,6 +109,24 @@ app.use(async ctx => {
 		cacheStorageUsage: `${(Number(await redis.get('cache-storage-usage')) / (1024 ** 3)).toFixed(2)} GB`
 	};
 });
+
+(async () => {
+	for(const { url, longitude, latitude } of nodes) {
+		await redis.geoadd('nodes', longitude, latitude, url);
+	}
+})();
+
+router.get('/nodes', async ctx => {
+	const { longitude, latitude } = ctx.query;
+
+	const n = 5;
+
+	ctx.body = JSON.stringify(
+		(await redis.georadius('nodes', longitude, latitude, '+inf', 'km', 'WITHDIST', 'COUNT', n, 'ASC'))
+			.map(([ url, distance ]) => ({ url, distance }))
+	);
+});
+
 
 app.use(router.routes());
 
