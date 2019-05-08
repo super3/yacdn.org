@@ -2,8 +2,8 @@
 
 const ipstackKey = process.env.IPSTACK_KEY;
 
-if(typeof ipstackKey !== 'string') {
-	throw new Error('No ipstack key defined');
+if (typeof ipstackKey !== 'string') {
+	throw new TypeError('No ipstack key defined');
 }
 
 module.exports = {

@@ -114,7 +114,7 @@ app.use(async (ctx, next) => {
 });
 
 (async () => {
-	for(const { url, longitude, latitude } of nodes) {
+	for (const {url, longitude, latitude} of nodes) {
 		await redis.geoadd('nodes', longitude, latitude, url);
 	}
 })();
@@ -131,7 +131,7 @@ router.get('/nodes', async ctx => {
 		}
 	} = await axios.get(`http://api.ipstack.com/${ip}`, {
 		params: {
-			'access_key': config.ipstackKey
+			access_key: config.ipstackKey
 		}
 	});
 
@@ -141,10 +141,9 @@ router.get('/nodes', async ctx => {
 
 	ctx.body = JSON.stringify(
 		(await redis.georadius('nodes', longitude, latitude, '+inf', 'km', 'WITHDIST', 'COUNT', n, 'ASC'))
-			.map(([ url, distance ]) => ({ url, distance }))
+			.map(([url, distance]) => ({url, distance}))
 	);
 });
-
 
 app.use(router.routes());
 

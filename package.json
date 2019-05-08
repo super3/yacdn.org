@@ -54,7 +54,8 @@
       "capitalized-comments": "off",
       "no-new": "off",
       "prefer-rest-params": "off",
-	  "unicorn/filename-case": ["off", {"case": "camelCase"}]
+	  "unicorn/filename-case": ["off", {"case": "camelCase"}],
+	  "camelcase": "off"
     }
   },
   "jest": {
