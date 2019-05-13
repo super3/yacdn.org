@@ -24,7 +24,7 @@
     "axios": "^0.18.0",
     "debug": "^4.1.1",
     "express": "^4.16.4",
-    "ioredis": "^4.9.1",
+    "ioredis": "^4.9.3",
     "koa": "^2.7.0",
     "koa-router": "^7.4.0",
     "koa-send": "^5.0.0",
@@ -36,7 +36,7 @@
     "coveralls": "^3.0.3",
     "del": "^4.1.1",
     "istanbul": "^1.1.0-alpha.1",
-    "jest": "^24.7.1",
+    "jest": "^24.8.0",
     "mocha": "^6.1.4",
     "mocker": "^0.1.2",
     "xo": "^0.24.0"
@@ -54,7 +54,8 @@
       "capitalized-comments": "off",
       "no-new": "off",
       "prefer-rest-params": "off",
-	  "unicorn/filename-case": ["off", {"case": "camelCase"}]
+	  "unicorn/filename-case": ["off", {"case": "camelCase"}],
+	  "camelcase": "off"
     }
   },
   "jest": {

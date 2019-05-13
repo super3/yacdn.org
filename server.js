@@ -3,8 +3,10 @@ const fs = require('fs');
 const {URL} = require('url');
 const Koa = require('koa');
 const Router = require('koa-router');
+const axios = require('axios');
 const debug = require('debug')('yacdn:server');
 
+const config = require('./config');
 const redis = require('./lib/redis');
 const Cache = require('./lib/Cache');
 const nodes = require('./nodes');
@@ -25,6 +27,7 @@ app.use(async (ctx, next) => {
 	try {
 		await next();
 	} catch (error) {
+		console.log(error);
 		ctx.status = 500;
 		ctx.body = 'Internal Server Error';
 	}
@@ -111,22 +114,36 @@ app.use(async (ctx, next) => {
 });
 
 (async () => {
-	for(const { url, longitude, latitude } of nodes) {
+	for (const {url, longitude, latitude} of nodes) {
 		await redis.geoadd('nodes', longitude, latitude, url);
 	}
 })();
 
 router.get('/nodes', async ctx => {
-	const { longitude, latitude } = ctx.query;
+	const ip = typeof ctx.headers['X-Forwarded-For'] === 'string' ? ctx.headers['X-Forwarded-For'] : ctx.ip;
+
+	debug('ip', ip);
+
+	const {
+		data: {
+			longitude,
+			latitude
+		}
+	} = await axios.get(`http://api.ipstack.com/${ip}`, {
+		params: {
+			access_key: config.ipstackKey
+		}
+	});
+
+	debug('longitude', longitude, 'latitude', latitude);
 
 	const n = 5;
 
 	ctx.body = JSON.stringify(
 		(await redis.georadius('nodes', longitude, latitude, '+inf', 'km', 'WITHDIST', 'COUNT', n, 'ASC'))
-			.map(([ url, distance ]) => ({ url, distance }))
+			.map(([url, distance]) => ({url, distance}))
 	);
 });
-
 
 app.use(router.routes());
 
