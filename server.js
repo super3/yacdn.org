@@ -120,7 +120,7 @@ app.use(async (ctx, next) => {
 })();
 
 router.get('/nodes', async ctx => {
-	const ip = typeof ctx.headers['X-Forwarded-For'] === 'string' ? ctx.headers['X-Forwarded-For'] : ctx.ip;
+	const ip = typeof ctx.headers['x-forwarded-for'] === 'string' ? ctx.headers['x-forwarded-for'] : ctx.ip;
 
 	debug('ip', ip);
 
