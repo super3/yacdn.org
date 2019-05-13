@@ -1,4 +1,4 @@
-'use strict';
+/* istanbul ignore file */
 
 const ipstackKey = process.env.IPSTACK_KEY;
 
