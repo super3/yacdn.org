@@ -93,5 +93,6 @@ test('/nodes', async () => {
 		}
 	});
 
-	assert.deepEqual(data[0], { url: 'https://yacdn.org', distance: '0.0001' });
+	assert.equal(data[0].url, 'https://yacdn.org');
+	assert(+data[0].distance < 0.0003);
 });
