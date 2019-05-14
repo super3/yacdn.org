@@ -85,3 +85,13 @@ test('/stats', async () => {
 	assert.strictEqual(typeof data.cdnData, 'string');
 	assert.strictEqual(typeof data.cacheStorageUsage, 'string');
 });
+
+test('/nodes', async () => {
+	const {data} = await axios.get(`http://localhost:3000/nodes`, {
+		headers: {
+			'x-forwarded-for': '51.15.124.253'
+		}
+	});
+
+	assert.deepEqual(data, [ { url: 'https://yacdn.org', distance: '0.0001' } ]);
+});
