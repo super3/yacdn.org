@@ -94,5 +94,5 @@ test('/nodes', async () => {
 	});
 
 	assert.strictEqual(data[0].url, 'https://yacdn.org');
-	assert(+data[0].distance < 0.0003);
+	assert(Number(data[0].distance) < 0.0003);
 });
