@@ -64,6 +64,7 @@ app.use(async (ctx, next) => {
 
 		debug('hostname', hostname, blacklist);
 
+		/* istanbul ignore next */
 		if (blacklist.includes(hostname)) {
 			throw new Error('Hostname on blacklist');
 		}
@@ -120,6 +121,7 @@ app.use(async (ctx, next) => {
 })();
 
 router.get('/nodes', async ctx => {
+	/* istanbul ignore next */
 	const ip = typeof ctx.headers['x-forwarded-for'] === 'string' ? ctx.headers['x-forwarded-for'] : ctx.ip;
 
 	debug('ip', ip);
