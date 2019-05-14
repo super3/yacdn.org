@@ -87,12 +87,12 @@ test('/stats', async () => {
 });
 
 test('/nodes', async () => {
-	const {data} = await axios.get(`http://localhost:3000/nodes`, {
+	const {data} = await axios.get('http://localhost:3000/nodes', {
 		headers: {
 			'x-forwarded-for': '51.15.124.253'
 		}
 	});
 
-	assert.equal(data[0].url, 'https://yacdn.org');
+	assert.strictEqual(data[0].url, 'https://yacdn.org');
 	assert(+data[0].distance < 0.0003);
 });
