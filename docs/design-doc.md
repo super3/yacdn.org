@@ -2,13 +2,11 @@
 
 ## Motivation
 
-Traditional CDNs are great, they make the web fast, reliable and open to all. However, they require massive startup capital and initial customers to buy servers all over the world.
-
-They also consolidate power into the hands of a single, large entity with no direct accountability to users and services.
+Traditional CDNs are great, they make the web fast, reliable and open to all. However, they require massive startup capital and initial customers to buy servers all over the world. They also consolidate power into the hands of a single, large entity with no direct accountability to users and services.
 
 ## Abstract
 
-Yacdn takes strong inspiration from peer-to-peer and cryptoeconomic systems. Through a distributed system of incentivisation, third-parties could host nodes of their own accord and receive income on a per-request basis.
+YaCDN takes strong inspiration from peer-to-peer and cryptoeconomic systems. Through a distributed system of incentivisation, third-parties could host nodes of their own accord and receive income on a per-request basis.
 
 This has two immediate practical advantages.
 
@@ -42,4 +40,12 @@ Do we issue small code libraries or do we publish a specification and expect ser
 
 ### Video Streaming Service
 
-A service akin to Netflix or Spotify could implement a solution using Yacdn where each client would lookup from a registry, then stream from a caching node in their local area.
+A service akin to Netflix or Spotify could implement a solution using YaCDN where each client would lookup from a registry, then stream from a caching node in their local area.
+
+### Hyper Local CDN
+
+When latency is important, YaCDN has a unique advantage over traditional CDNs. Because YaCDN nodes can be run anywhere, content/data could be served from the building next door rather than a data center 3 states away.
+
+### Underserved CDN
+
+Traditional CDNs have real costs to build out capacity to serve customers in a particular region. While a particular region might have use for CDN, a smaller market might not warrent the inital investment. Because YaCDN can run on any hardware at any scale, it can be deployed to underserved regions with minimal effort and cost.
