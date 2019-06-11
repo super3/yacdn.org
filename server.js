@@ -24,6 +24,18 @@ const blacklist = (() => {
 debug('blacklist', blacklist);
 
 app.use(async (ctx, next) => {
+	const logs = [];
+
+	ctx.debug = (...args) => logs.push(args);
+
+	await next();
+
+	for(const log in logs) {
+		debug(...log);
+	}
+})
+
+app.use(async (ctx, next) => {
 	try {
 		await next();
 	} catch (error) {
@@ -56,13 +68,13 @@ app.use(async (ctx, next) => {
 
 	const url = `${ctx.path.slice(servePath.length)}?${route === 'proxy' ? ctx.querystring : ''}`;
 
-	debug(`serve#${n} url: ${url}`);
-	debug(`serve#${n} referer: ${ctx.request.headers.referer}`);
+	ctx.debug(`serve#${n} url: ${url}`);
+	ctx.debug(`serve#${n} referer: ${ctx.request.headers.referer}`);
 
 	if (typeof ctx.request.headers.referer === 'string') {
 		const {hostname} = new URL(ctx.request.headers.referer);
 
-		debug('hostname', hostname, blacklist);
+		ctx.debug('hostname', hostname, blacklist);
 
 		/* istanbul ignore next */
 		if (blacklist.includes(hostname)) {
@@ -82,7 +94,7 @@ app.use(async (ctx, next) => {
 		data
 	} = await cache.retrieve(url, maxAge);
 
-	debug(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
+	ctx.debug(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
 
 	ctx.set('Access-Control-Allow-Origin', '*');
 	ctx.set('Content-Length', contentLength);
@@ -96,8 +108,8 @@ app.use(async (ctx, next) => {
 
 	// await new Promise(resolve => data.once('end', resolve));
 
-	debug(`serve#${n} done, took ${time}ms`);
-	debug(`serve#${n} effective speed: ${(speed / (10 ** 6)).toFixed(2)} megabits/s`);
+	ctx.debug(`serve#${n} done, took ${time}ms`);
+	ctx.debug(`serve#${n} effective speed: ${(speed / (10 ** 6)).toFixed(2)} megabits/s`);
 });
 
 app.use(async (ctx, next) => {
