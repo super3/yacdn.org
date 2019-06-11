@@ -30,10 +30,10 @@ app.use(async (ctx, next) => {
 
 	await next();
 
-	for(const log in logs) {
+	for (const log of logs) {
 		debug(...log);
 	}
-})
+});
 
 app.use(async (ctx, next) => {
 	try {
