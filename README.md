@@ -7,6 +7,7 @@ Yet Another CDN.
 [![CDN Hits](https://img.shields.io/badge/dynamic/json.svg?label=CDN%20Hits&url=https://yacdn.org/stats&query=$.cdnHits&colorB=green)](https://img.shields.io/badge/dynamic/json.svg?label=CDN%20Hits&url=https://yacdn.org/stats&query=$.cdnHits&colorB=green)
 [![CDN Data](https://img.shields.io/badge/dynamic/json.svg?label=CDN%20Data&url=https://yacdn.org/stats&query=$.cdnData&colorB=blue)](https://img.shields.io/badge/dynamic/json.svg?label=CDN%20Data&url=https://yacdn.org/stats&query=$.cdnData&colorB=blue)
 [![Cache Usage](https://img.shields.io/badge/dynamic/json.svg?label=Cache%20Usage&url=https://yacdn.org/stats&query=$.cacheStorageUsage&colorB=purple)](https://img.shields.io/badge/dynamic/json.svg?label=Cache%20Usage&url=https://yacdn.org/stats&query=$.cacheStorageUsage&colorB=purple)
+[![Cache Usage](https://img.shields.io/badge/design-doc-blue.svg)](https://github.com/ovsoinc/yacdn.org/blob/master/docs/design-doc.md)
 
 ## CDN
 
