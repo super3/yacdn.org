@@ -1,4 +1,4 @@
-# YaCDN Design
+# YaCDN Design Doc
 
 ## Motivation
 
