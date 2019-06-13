@@ -49,3 +49,7 @@ When latency is important, YaCDN has a unique advantage over traditional CDNs. B
 ### Underserved CDN
 
 Traditional CDNs have real costs to build out capacity to serve customers in a particular region. While a particular region might have use for CDN, a smaller market might not warrent the inital investment. Because YaCDN can run on any hardware at any scale, it can be deployed to underserved regions with minimal effort and cost.
+
+### Application/Firmware Updates
+
+Application or firmware updates to thousands or millions of devices. If the updates do not need to be pushed immediately, YaCDN can be used a low cost solution. If a high prority security update is needed YaCDN can distribute the update faster than any traditional CDN due to its distributed nature. 
