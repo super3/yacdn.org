@@ -38,18 +38,12 @@ Do we issue small code libraries or do we publish a specification and expect ser
 
 ## Use Cases
 
-### Video Streaming Service
+* **Application/Firmware Updates** - Application or firmware updates to thousands or millions of devices. If the updates do not need to be pushed immediately, YaCDN can be used a low cost solution. If a high prority security update is needed YaCDN can distribute the update faster than any traditional CDN due to its distributed nature. 
 
-A service akin to Netflix or Spotify could implement a solution using YaCDN where each client would lookup from a registry, then stream from a caching node in their local area.
+* **Video Streaming Service** - A service akin to Netflix or Spotify could implement a solution using YaCDN where each client would lookup from a registry, then stream from a caching node in their local area.
 
-### Hyper Local CDN
+* **Hyper Local CDN** - When latency is important, YaCDN has a unique advantage over traditional CDNs. Because YaCDN nodes can be run anywhere, content/data could be served from the building next door rather than a data center 3 states away.
 
-When latency is important, YaCDN has a unique advantage over traditional CDNs. Because YaCDN nodes can be run anywhere, content/data could be served from the building next door rather than a data center 3 states away.
+* **Underserved CDN** - Traditional CDNs have real costs to build out capacity to serve customers in a particular region. While a particular region might have use for CDN, a smaller market might not warrent the inital investment. Because YaCDN can run on any hardware at any scale, it can be deployed to underserved regions with minimal effort and cost.
 
-### Underserved CDN
 
-Traditional CDNs have real costs to build out capacity to serve customers in a particular region. While a particular region might have use for CDN, a smaller market might not warrent the inital investment. Because YaCDN can run on any hardware at any scale, it can be deployed to underserved regions with minimal effort and cost.
-
-### Application/Firmware Updates
-
-Application or firmware updates to thousands or millions of devices. If the updates do not need to be pushed immediately, YaCDN can be used a low cost solution. If a high prority security update is needed YaCDN can distribute the update faster than any traditional CDN due to its distributed nature. 
