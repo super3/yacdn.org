@@ -30,7 +30,9 @@
     "koa-send": "^5.0.0",
     "mime-types": "^2.1.24",
     "nodemon": "^1.19.1",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "winston": "^3.2.1",
+    "winston-papertrail": "^1.0.5"
   },
   "devDependencies": {
     "coveralls": "^3.0.4",
@@ -54,8 +56,13 @@
       "capitalized-comments": "off",
       "no-new": "off",
       "prefer-rest-params": "off",
-	  "unicorn/filename-case": ["off", {"case": "camelCase"}],
-	  "camelcase": "off"
+      "unicorn/filename-case": [
+        "off",
+        {
+          "case": "camelCase"
+        }
+      ],
+      "camelcase": "off"
     }
   },
   "jest": {
