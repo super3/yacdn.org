@@ -14,6 +14,7 @@ const winstonPapertrail = new Papertrail({
 });
 
 const logger = winston.createLogger({
+	format: winston.format.json(),
 	transports: [winstonPapertrail]
 });
 
@@ -35,22 +36,6 @@ const blacklist = (() => {
 debug('blacklist', blacklist);
 
 app.use(async (ctx, next) => {
-	const logs = [];
-
-	ctx.debug = (...args) => {
-		logs.push(args);
-
-		logger.info(...args);
-	};
-
-	await next();
-
-	for (const log of logs) {
-		debug(...log);
-	}
-});
-
-app.use(async (ctx, next) => {
 	try {
 		await next();
 	} catch (error) {
@@ -58,6 +43,16 @@ app.use(async (ctx, next) => {
 		ctx.status = 500;
 		ctx.body = 'Internal Server Error';
 	}
+});
+
+app.use(async (ctx, next) => {
+	ctx.log = {};
+
+	await next();
+
+	const logString = Object.entries(ctx.log).map(([ key, value ]) => `${key}: ${JSON.stringify(value)}`).join(' ');
+
+	logger.info(logString);
 });
 
 app.use(async (ctx, next) => {
@@ -79,17 +74,16 @@ app.use(async (ctx, next) => {
 
 	const route = ctx.path.startsWith(servePath) ? 'serve' : 'proxy';
 
-	const n = await redis.incr('cdnhits');
+	const n = ctx.log.n = await redis.incr('cdnhits');
 
-	const url = `${ctx.path.slice(servePath.length)}?${route === 'proxy' ? ctx.querystring : ''}`;
+	const url = ctx.log.url = `${ctx.path.slice(servePath.length)}?${route === 'proxy' ? ctx.querystring : ''}`;
 
-	ctx.debug(`serve# ${n} url: ${url}`);
-	ctx.debug(`serve# ${n} referer: ${ctx.request.headers.referer}`);
+	ctx.log.referer = ctx.request.headers.referer;
 
 	if (typeof ctx.request.headers.referer === 'string') {
 		const {hostname} = new URL(ctx.request.headers.referer);
 
-		ctx.debug('hostname', hostname, blacklist);
+		// ctx.debug('hostname', hostname, blacklist);
 
 		/* istanbul ignore next */
 		if (blacklist.includes(hostname)) {
@@ -109,7 +103,7 @@ app.use(async (ctx, next) => {
 		data
 	} = await cache.retrieve(url, maxAge);
 
-	ctx.debug(`serve# ${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
+	ctx.log.size = `${(contentLength / (1024 ** 2)).toFixed(2)} MB`;
 
 	ctx.set('Access-Control-Allow-Origin', '*');
 	ctx.set('Content-Length', contentLength);
@@ -123,8 +117,8 @@ app.use(async (ctx, next) => {
 
 	// await new Promise(resolve => data.once('end', resolve));
 
-	ctx.debug(`serve# ${n} done, took ${time}ms`);
-	ctx.debug(`serve# ${n} effective speed: ${(speed / (10 ** 6)).toFixed(2)} megabits/s`);
+	ctx.log.time = `${time}ms`;
+	ctx.log.speed = `${(speed / (10 ** 6)).toFixed(2)} megabits/s`;
 });
 
 app.use(async (ctx, next) => {
