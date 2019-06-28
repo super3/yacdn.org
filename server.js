@@ -41,7 +41,7 @@ app.use(async (ctx, next) => {
 		logs.push(args);
 
 		logger.info(...args);
-	}
+	};
 
 	await next();
 
