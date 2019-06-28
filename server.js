@@ -5,6 +5,17 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const axios = require('axios');
 const debug = require('debug')('yacdn:server');
+const winston = require('winston');
+const {Papertrail} = require('winston-papertrail');
+
+const winstonPapertrail = new Papertrail({
+	host: 'logs5.papertrailapp.com',
+	port: 30059
+});
+
+const logger = winston.createLogger({
+	transports: [winstonPapertrail]
+});
 
 const config = require('./config');
 const redis = require('./lib/redis');
@@ -26,7 +37,11 @@ debug('blacklist', blacklist);
 app.use(async (ctx, next) => {
 	const logs = [];
 
-	ctx.debug = (...args) => logs.push(args);
+	ctx.debug = (...args) => {
+		logs.push(args);
+
+		logger.info(...args);
+	}
 
 	await next();
 
@@ -68,8 +83,8 @@ app.use(async (ctx, next) => {
 
 	const url = `${ctx.path.slice(servePath.length)}?${route === 'proxy' ? ctx.querystring : ''}`;
 
-	ctx.debug(`serve#${n} url: ${url}`);
-	ctx.debug(`serve#${n} referer: ${ctx.request.headers.referer}`);
+	ctx.debug(`serve# ${n} url: ${url}`);
+	ctx.debug(`serve# ${n} referer: ${ctx.request.headers.referer}`);
 
 	if (typeof ctx.request.headers.referer === 'string') {
 		const {hostname} = new URL(ctx.request.headers.referer);
@@ -94,7 +109,7 @@ app.use(async (ctx, next) => {
 		data
 	} = await cache.retrieve(url, maxAge);
 
-	ctx.debug(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
+	ctx.debug(`serve# ${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
 
 	ctx.set('Access-Control-Allow-Origin', '*');
 	ctx.set('Content-Length', contentLength);
@@ -108,8 +123,8 @@ app.use(async (ctx, next) => {
 
 	// await new Promise(resolve => data.once('end', resolve));
 
-	ctx.debug(`serve#${n} done, took ${time}ms`);
-	ctx.debug(`serve#${n} effective speed: ${(speed / (10 ** 6)).toFixed(2)} megabits/s`);
+	ctx.debug(`serve# ${n} done, took ${time}ms`);
+	ctx.debug(`serve# ${n} effective speed: ${(speed / (10 ** 6)).toFixed(2)} megabits/s`);
 });
 
 app.use(async (ctx, next) => {
