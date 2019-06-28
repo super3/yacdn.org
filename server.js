@@ -51,7 +51,7 @@ app.use(async (ctx, next) => {
 
 	const logString = Object.entries(ctx.log).map(([ key, value ]) => `${key}: ${JSON.stringify(value)}`).join(' ');
 
-	logger.info(logString);
+	logger.info(`request ${logString}`);
 });
 
 app.use(async (ctx, next) => {
