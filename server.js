@@ -49,7 +49,7 @@ app.use(async (ctx, next) => {
 
 	await next();
 
-	const logString = Object.entries(ctx.log).map(([ key, value ]) => `${key}: ${JSON.stringify(value)}`).join(' ');
+	const logString = Object.entries(ctx.log).map(([key, value]) => `${key}: ${JSON.stringify(value)}`).join(' ');
 
 	logger.info(`request ${logString}`);
 });
@@ -73,9 +73,11 @@ app.use(async (ctx, next) => {
 
 	const route = ctx.path.startsWith(servePath) ? 'serve' : 'proxy';
 
-	const n = ctx.log.n = await redis.incr('cdnhits');
+	ctx.log.n = await redis.incr('cdnhits');
 
-	const url = ctx.log.url = `${ctx.path.slice(servePath.length)}?${route === 'proxy' ? ctx.querystring : ''}`;
+	const url = `${ctx.path.slice(servePath.length)}?${route === 'proxy' ? ctx.querystring : ''}`;
+
+	ctx.log.url = url;
 
 	ctx.log.referer = ctx.request.headers.referer;
 
