@@ -102,6 +102,6 @@ test('/nodes', async () => {
 		}
 	});
 
-	assert.strictEqual(data[0].url, 'https://yacdn.org');
+	assert.strictEqual(data[0].url, 'https://node1.yacdn.org');
 	assert(Number(data[0].distance) < 1);
 });

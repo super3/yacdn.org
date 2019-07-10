@@ -25,6 +25,7 @@
     "debug": "^4.1.1",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "human-readable-numbers": "^0.9.5",
     "ioredis": "^4.11.1",
     "koa": "^2.7.0",
     "koa-router": "^7.4.0",
