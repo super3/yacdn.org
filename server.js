@@ -25,6 +25,8 @@ const blacklist = (() => {
 debug('blacklist', blacklist);
 
 app.use(async (ctx, next) => {
+	ctx.set('Access-Control-Allow-Origin', '*');
+
 	try {
 		await next();
 	} catch (error) {
@@ -94,7 +96,6 @@ app.use(async (ctx, next) => {
 
 	ctx.log.size = prettyBytes(contentLength);
 
-	ctx.set('Access-Control-Allow-Origin', '*');
 	ctx.set('Content-Length', contentLength);
 	ctx.set('Content-Type', contentType);
 	ctx.body = data;
