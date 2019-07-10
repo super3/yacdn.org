@@ -145,7 +145,7 @@ app.use(async (ctx, next) => {
 		return a;
 	});
 
-	ctx.body {
+	ctx.body = {
 		cdnHits: stats.cdnHits,
 		cdnData: prettyBytes(stats.cdnData),
 		cacheStorageUsage: prettyBytes(stats.cacheStorageUsage)
