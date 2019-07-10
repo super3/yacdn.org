@@ -82,6 +82,15 @@ test('/stats', async () => {
 
 	assert.strictEqual(typeof data, 'object');
 	assert.strictEqual(typeof data.cdnHits, 'number');
+	assert.strictEqual(typeof data.cdnData, 'number');
+	assert.strictEqual(typeof data.cacheStorageUsage, 'number');
+});
+
+test('/global', async () => {
+	const {data} = await axios.get('http://localhost:3000/stats');
+
+	assert.strictEqual(typeof data, 'object');
+	assert.strictEqual(typeof data.cdnHits, 'number');
 	assert.strictEqual(typeof data.cdnData, 'string');
 	assert.strictEqual(typeof data.cacheStorageUsage, 'string');
 });
