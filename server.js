@@ -107,7 +107,7 @@ app.use(async (ctx, next) => {
 	// await new Promise(resolve => data.once('end', resolve));
 
 	ctx.log.time = `${time}ms`;
-	ctx.log.speed = `${(speed / (10 ** 6)).toFixed(2)} megabits/s`;
+	ctx.log.speed = `${prettyBytes(speed)}/s`;
 });
 
 app.use(async (ctx, next) => {
