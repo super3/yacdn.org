@@ -14,6 +14,7 @@ const winstonPapertrail = new Papertrail({
 });
 
 const logger = winston.createLogger({
+	format: winston.format.simple(),
 	transports: [winstonPapertrail]
 });
 
