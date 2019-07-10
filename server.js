@@ -103,12 +103,12 @@ app.use(async (ctx, next) => {
 	await redis.incrby('cdndata', contentLength);
 
 	const time = Date.now() - startTime;
-	const speed = contentLength / (time / 1000);
+	const speed = (contentLength * 8) / (time / 1000);
 
 	// await new Promise(resolve => data.once('end', resolve));
 
 	ctx.log.time = `${time}ms`;
-	ctx.log.speed = `${prettyBytes(speed)}/s`;
+	ctx.log.speed = `${prettyBytes(speed, {bits: true})}/s`;
 });
 
 app.use(async (ctx, next) => {
