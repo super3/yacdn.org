@@ -4,6 +4,7 @@ const {URL} = require('url');
 const Koa = require('koa');
 const Router = require('koa-router');
 const axios = require('axios');
+const prettyBytes = require('pretty-bytes');
 const debug = require('debug')('yacdn:server');
 
 const config = require('./config');
@@ -91,7 +92,7 @@ app.use(async (ctx, next) => {
 		data
 	} = await cache.retrieve(url, maxAge);
 
-	ctx.log.size = `${(contentLength / (1024 ** 2)).toFixed(2)} MB`;
+	ctx.log.size = prettyBytes(contentLength);
 
 	ctx.set('Access-Control-Allow-Origin', '*');
 	ctx.set('Content-Length', contentLength);
@@ -118,8 +119,8 @@ app.use(async (ctx, next) => {
 
 	ctx.body = {
 		cdnHits: Number(await redis.get('cdnhits')),
-		cdnData: `${(Number(await redis.get('cdndata')) / (1024 ** 3)).toFixed(2)} GB`,
-		cacheStorageUsage: `${(Number(await redis.get('cache-storage-usage')) / (1024 ** 3)).toFixed(2)} GB`
+		cdnData: prettyBytes(await redis.get('cdndata')),
+		cacheStorageUsage: prettyBytes(await redis.get('cache-storage-usage'))
 	};
 });
 
