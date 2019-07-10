@@ -119,8 +119,8 @@ app.use(async (ctx, next) => {
 
 	ctx.body = {
 		cdnHits: Number(await redis.get('cdnhits')),
-		cdnData: prettyBytes(await redis.get('cdndata')),
-		cacheStorageUsage: prettyBytes(await redis.get('cache-storage-usage'))
+		cdnData: prettyBytes(Number(await redis.get('cdndata'))),
+		cacheStorageUsage: prettyBytes(Number(await redis.get('cache-storage-usage')))
 	};
 });
 
