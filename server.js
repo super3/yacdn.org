@@ -5,18 +5,6 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const axios = require('axios');
 const debug = require('debug')('yacdn:server');
-const winston = require('winston');
-const {Papertrail} = require('winston-papertrail');
-
-const winstonPapertrail = new Papertrail({
-	host: 'logs5.papertrailapp.com',
-	port: 30059
-});
-
-const logger = winston.createLogger({
-	format: winston.format.simple(),
-	transports: [winstonPapertrail]
-});
 
 const config = require('./config');
 const redis = require('./lib/redis');
@@ -50,9 +38,7 @@ app.use(async (ctx, next) => {
 
 	await next();
 
-	const logString = Object.entries(ctx.log).map(([key, value]) => `${key}: ${JSON.stringify(value)}`).join(' ');
-
-	logger.info(`request ${logString}`);
+	console.log(ctx.log);
 });
 
 app.use(async (ctx, next) => {
