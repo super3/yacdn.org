@@ -120,8 +120,35 @@ app.use(async (ctx, next) => {
 
 	ctx.body = {
 		cdnHits: Number(await redis.get('cdnhits')),
-		cdnData: prettyBytes(Number(await redis.get('cdndata'))),
-		cacheStorageUsage: prettyBytes(Number(await redis.get('cache-storage-usage')))
+		cdnData: Number(await redis.get('cdndata')),
+		cacheStorageUsage: Number(await redis.get('cache-storage-usage'))
+	};
+});
+
+app.use(async (ctx, next) => {
+	const servePath = '/global-stats';
+
+	/* istanbul ignore next */
+	if (!ctx.path.startsWith(servePath))
+		return next();
+
+	const nodeStats = await Promise.all(nodes.map(async node => {
+		const {data} = await axios.get(`${node.url}/stats`);
+		return data;
+	}));
+
+	const stats = nodeStats.reduce((a, b) => {
+		a.cdnHits += b.cdnHits;
+		a.cdnData += b.cdnData;
+		a.cacheStorageUsage += b.cacheStorageUsage;
+
+		return a;
+	});
+
+	ctx.body {
+		cdnHits: stats.cdnHits,
+		cdnData: prettyBytes(stats.cdnData),
+		cacheStorageUsage: prettyBytes(stats.cacheStorageUsage)
 	};
 });
 
