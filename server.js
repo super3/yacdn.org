@@ -4,6 +4,7 @@ const {URL} = require('url');
 const Koa = require('koa');
 const Router = require('koa-router');
 const axios = require('axios');
+const prettyBytes = require('pretty-bytes');
 const debug = require('debug')('yacdn:server');
 
 const config = require('./config');
@@ -24,6 +25,8 @@ const blacklist = (() => {
 debug('blacklist', blacklist);
 
 app.use(async (ctx, next) => {
+	ctx.set('Access-Control-Allow-Origin', '*');
+
 	try {
 		await next();
 	} catch (error) {
@@ -31,6 +34,14 @@ app.use(async (ctx, next) => {
 		ctx.status = 500;
 		ctx.body = 'Internal Server Error';
 	}
+});
+
+app.use(async (ctx, next) => {
+	ctx.log = {};
+
+	await next();
+
+	console.log(ctx.log);
 });
 
 app.use(async (ctx, next) => {
@@ -52,17 +63,18 @@ app.use(async (ctx, next) => {
 
 	const route = ctx.path.startsWith(servePath) ? 'serve' : 'proxy';
 
-	const n = await redis.incr('cdnhits');
+	ctx.log.n = await redis.incr('cdnhits');
 
 	const url = `${ctx.path.slice(servePath.length)}?${route === 'proxy' ? ctx.querystring : ''}`;
 
-	debug(`serve#${n} url: ${url}`);
-	debug(`serve#${n} referer: ${ctx.request.headers.referer}`);
+	ctx.log.url = url;
+
+	ctx.log.referer = ctx.request.headers.referer;
 
 	if (typeof ctx.request.headers.referer === 'string') {
 		const {hostname} = new URL(ctx.request.headers.referer);
 
-		debug('hostname', hostname, blacklist);
+		// ctx.debug('hostname', hostname, blacklist);
 
 		/* istanbul ignore next */
 		if (blacklist.includes(hostname)) {
@@ -82,9 +94,8 @@ app.use(async (ctx, next) => {
 		data
 	} = await cache.retrieve(url, maxAge);
 
-	debug(`serve#${n} size: ${(contentLength / (1024 ** 2)).toFixed(2)} MB`);
+	ctx.log.size = prettyBytes(contentLength);
 
-	ctx.set('Access-Control-Allow-Origin', '*');
 	ctx.set('Content-Length', contentLength);
 	ctx.set('Content-Type', contentType);
 	ctx.body = data;
@@ -92,12 +103,12 @@ app.use(async (ctx, next) => {
 	await redis.incrby('cdndata', contentLength);
 
 	const time = Date.now() - startTime;
-	const speed = contentLength / (time / 1000);
+	const speed = (contentLength * 8) / (time / 1000);
 
 	// await new Promise(resolve => data.once('end', resolve));
 
-	debug(`serve#${n} done, took ${time}ms`);
-	debug(`serve#${n} effective speed: ${(speed / (10 ** 6)).toFixed(2)} megabits/s`);
+	ctx.log.time = `${time}ms`;
+	ctx.log.speed = `${prettyBytes(speed, {bits: true})}/s`;
 });
 
 app.use(async (ctx, next) => {
@@ -109,8 +120,35 @@ app.use(async (ctx, next) => {
 
 	ctx.body = {
 		cdnHits: Number(await redis.get('cdnhits')),
-		cdnData: `${(Number(await redis.get('cdndata')) / (1024 ** 3)).toFixed(2)} GB`,
-		cacheStorageUsage: `${(Number(await redis.get('cache-storage-usage')) / (1024 ** 3)).toFixed(2)} GB`
+		cdnData: Number(await redis.get('cdndata')),
+		cacheStorageUsage: Number(await redis.get('cache-storage-usage'))
+	};
+});
+
+app.use(async (ctx, next) => {
+	const servePath = '/global-stats';
+
+	/* istanbul ignore next */
+	if (!ctx.path.startsWith(servePath))
+		return next();
+
+	const nodeStats = await Promise.all(nodes.map(async node => {
+		const {data} = await axios.get(`${node.url}/stats`);
+		return data;
+	}));
+
+	const stats = nodeStats.reduce((a, b) => {
+		a.cdnHits += b.cdnHits;
+		a.cdnData += b.cdnData;
+		a.cacheStorageUsage += b.cacheStorageUsage;
+
+		return a;
+	});
+
+	ctx.body = {
+		cdnHits: stats.cdnHits,
+		cdnData: prettyBytes(stats.cdnData),
+		cacheStorageUsage: prettyBytes(stats.cacheStorageUsage)
 	};
 });
 

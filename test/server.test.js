@@ -82,6 +82,15 @@ test('/stats', async () => {
 
 	assert.strictEqual(typeof data, 'object');
 	assert.strictEqual(typeof data.cdnHits, 'number');
+	assert.strictEqual(typeof data.cdnData, 'number');
+	assert.strictEqual(typeof data.cacheStorageUsage, 'number');
+});
+
+test('/global-stats', async () => {
+	const {data} = await axios.get('http://localhost:3000/global-stats');
+
+	assert.strictEqual(typeof data, 'object');
+	assert.strictEqual(typeof data.cdnHits, 'number');
 	assert.strictEqual(typeof data.cdnData, 'string');
 	assert.strictEqual(typeof data.cacheStorageUsage, 'string');
 });
@@ -93,6 +102,6 @@ test('/nodes', async () => {
 		}
 	});
 
-	assert.strictEqual(data[0].url, 'https://yacdn.org');
-	assert(Number(data[0].distance) < 0.0003);
+	assert.strictEqual(data[0].url, 'https://node1.yacdn.org');
+	assert(Number(data[0].distance) < 1);
 });

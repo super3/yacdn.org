@@ -21,20 +21,26 @@
   },
   "homepage": "https://github.com/ovsoinc/yacdn#readme",
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.19.0",
     "debug": "^4.1.1",
-    "express": "^4.17.0",
-    "ioredis": "^4.9.3",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "human-readable-numbers": "^0.9.5",
+    "ioredis": "^4.11.1",
     "koa": "^2.7.0",
     "koa-router": "^7.4.0",
     "koa-send": "^5.0.0",
+    "mem": "^5.1.1",
     "mime-types": "^2.1.24",
-    "nodemon": "^1.19.0",
-    "request": "^2.88.0"
+    "nodemon": "^1.19.1",
+    "pretty-bytes": "git+https://git@github.com/ovsoinc/pretty-bytes#bf25220869dd18b71f7a69709040b7940e7609bb",
+    "request": "^2.88.0",
+    "winston": "^3.2.1",
+    "winston-papertrail": "^1.0.5"
   },
   "devDependencies": {
-    "coveralls": "^3.0.3",
-    "del": "^4.1.1",
+    "coveralls": "^3.0.5",
+    "del": "^5.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "jest": "^24.8.0",
     "mocha": "^6.1.4",
@@ -54,8 +60,13 @@
       "capitalized-comments": "off",
       "no-new": "off",
       "prefer-rest-params": "off",
-	  "unicorn/filename-case": ["off", {"case": "camelCase"}],
-	  "camelcase": "off"
+      "unicorn/filename-case": [
+        "off",
+        {
+          "case": "camelCase"
+        }
+      ],
+      "camelcase": "off"
     }
   },
   "jest": {
