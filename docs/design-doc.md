@@ -2,18 +2,18 @@
 
 ## Motivation
 
-Traditional CDNs are great, they have made the web faster and more reliable under accelerating and massive demand for web services. However sometimes [these traditional centralized CDNs fail](https://www.zdnet.com/article/cloudflare-stutters-and-the-internet-stumbles/) talking half of the internet with them. They also consolidate power into the hands of a single, large entities with no direct accountability to users. As user privacy and security is becoming a larger concern to users, traditional CDNs are not ideal.
+Traditional CDNs are great, they have made the web faster and more reliable under accelerating and massive demand for web services. However sometimes [these traditional centralized CDNs fail](https://www.zdnet.com/article/cloudflare-stutters-and-the-internet-stumbles/) talking half of the internet with them. They also consolidate power into the hands of a few large entities with no direct accountability to users. As user privacy and security is becoming a larger concern to users, traditional CDNs are not ideal.
 
 We belive that a distributed and decentralized CDN solution can solve these issues, in addition to innovations that would make it it a better choice than a traditional CDN. Due to its archetecture it can be made cheaper, faster, more secure, and more private than a centralized counterpart.
  
 ## Abstract
 
-YaCDN takes strong inspiration from peer-to-peer and cryptoeconomic systems. Through a distributed system of incentivisation, third-parties could host nodes of their own accord and receive income on a per-request basis.
+YaCDN, Yet Another CDN, takes strong inspiration from peer-to-peer and cryptoeconomic systems. Through a distributed system of incentivisation, third-parties could host nodes of their own accord and receive income on a per-request basis.
 
 This has many immediate practical advantages:
 
 * Creating and maintaing the network has far less cost, expecially if using existing excess bandwidth/hardware
-* Greater and more local global coverage than possible through buying up servers
+* Greater and more global coverage than possible through buying up servers
 * Because it can be deployed anywhere, it can achive much better latency than any other solution at scale
 * Not controlled by a single entity, archtecture, network, or hardware so the failures will have limited impact
 * Market based economy, the network can quickly grow and shrink based on demand. Deploying new infrastructure takes minutes, not months.
