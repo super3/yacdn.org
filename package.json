@@ -32,7 +32,7 @@
     "koa-send": "^5.0.0",
     "mem": "^5.1.1",
     "mime-types": "^2.1.24",
-    "nodemon": "^1.19.1",
+    "nodemon": "^1.19.3",
     "pretty-bytes": "git+https://git@github.com/ovsoinc/pretty-bytes#bf25220869dd18b71f7a69709040b7940e7609bb",
     "request": "^2.88.0",
     "winston": "^3.2.1",
