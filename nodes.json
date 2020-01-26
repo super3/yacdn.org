@@ -1,11 +1,6 @@
 [
 	{
-		"url": "https://node1.yacdn.org",
-		"latitude": 52.3824,
-		"longitude": 4.8995
-	},
-	{
-		"url": "https://node2.yacdn.org",
+		"url": "https://yacdn.org",
 		"latitude": 52.3824,
 		"longitude": 4.8995
 	}
