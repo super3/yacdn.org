@@ -30,7 +30,7 @@
     "koa": "^2.8.1",
     "koa-router": "^7.4.0",
     "koa-send": "^5.0.0",
-    "mem": "^5.1.1",
+    "mem": "^6.0.1",
     "mime-types": "^2.1.24",
     "nodemon": "^1.19.1",
     "pretty-bytes": "git+https://git@github.com/ovsoinc/pretty-bytes#bf25220869dd18b71f7a69709040b7940e7609bb",
