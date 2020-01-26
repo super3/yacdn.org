@@ -27,7 +27,7 @@
     "express": "^4.17.1",
     "human-readable-numbers": "^0.9.5",
     "ioredis": "^4.14.1",
-    "koa": "^2.8.1",
+    "koa": "^2.11.0",
     "koa-router": "^7.4.0",
     "koa-send": "^5.0.0",
     "mem": "^5.1.1",
