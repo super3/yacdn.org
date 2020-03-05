@@ -6,6 +6,7 @@ const Router = require('koa-router');
 const axios = require('axios');
 const prettyBytes = require('pretty-bytes');
 const debug = require('debug')('yacdn:server');
+const Nile = require('nile');
 
 const config = require('./config');
 const redis = require('./lib/redis');
@@ -15,6 +16,8 @@ const nodes = require('./nodes');
 const cache = new Cache();
 const app = new Koa();
 const router = new Router();
+
+const nile = new Nile('yacdn.org');
 
 const blacklist = (() => {
 	const file = fs.readFileSync(`${__dirname}/blacklist.txt`, 'utf8');
@@ -42,6 +45,7 @@ app.use(async (ctx, next) => {
 	await next();
 
 	console.log(ctx.log);
+	nile.pushChunk('server', JSON.stringify(ctx.log));
 });
 
 app.use(async (ctx, next) => {
