@@ -30,7 +30,7 @@
     "koa": "^2.11.0",
     "koa-router": "^8.0.8",
     "koa-send": "^5.0.0",
-    "mem": "^6.0.1",
+    "mem": "^6.1.1",
     "mime-types": "^2.1.26",
     "nile": "git+https://github.com/ovsoinc/node-nile.git",
     "nodemon": "^2.0.3",
