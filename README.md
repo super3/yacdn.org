@@ -27,9 +27,9 @@ https://yacdn.org/serve/<uri>?maxAge=[seconds]
 
 #### Example
 ```
-https://yacdn.org/serve/http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png
+https://yacdn.org/serve/https://apprecs.org/ios/images/app-icons/256/4e/432805198.jpg
 ```
-![https://yacdn.org/serve/http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png](https://yacdn.org/serve/http://meowbaari.com/wp-content/uploads/2016/06/1464933654_cat_sleep.png)
+![https://yacdn.org/serve/https://apprecs.org/ios/images/app-icons/256/4e/432805198.jpg](https://yacdn.org/serve/hhttps://apprecs.org/ios/images/app-icons/256/4e/432805198.jpg)
 
 ## Proxy / CORS Proxy
 
@@ -43,9 +43,9 @@ https://yacdn.org/proxy/<uri>
 
 #### Example
 ```
-https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/1464933927_cat_acrobat.png
+https://yacdn.org/proxy/https://apprecs.org/ios/images/app-icons/256/4e/432805198.jpg
 ```
-![https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/1464933927_cat_acrobat.png](https://yacdn.org/proxy/http://meowbaari.com/wp-content/uploads/2016/06/1464933927_cat_acrobat.png)
+![https://apprecs.org/ios/images/app-icons/256/4e/432805198.jpg](https://apprecs.org/ios/images/app-icons/256/4e/432805198.jpg)
 
 ## Technical
 
