@@ -33,7 +33,7 @@
     "mem": "^6.0.1",
     "mime-types": "^2.1.26",
     "nile": "git+https://github.com/ovsoinc/node-nile.git",
-    "nodemon": "^2.0.3",
+    "nodemon": "^2.0.6",
     "pretty-bytes": "git+https://git@github.com/ovsoinc/pretty-bytes#bf25220869dd18b71f7a69709040b7940e7609bb",
     "request": "^2.88.2",
     "winston": "^3.2.1",
