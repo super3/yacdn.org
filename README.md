@@ -1,3 +1,5 @@
+This repo and service are no longer maintained.
+
 # yacdn.org
 Yet Another CDN.
 
