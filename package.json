@@ -36,7 +36,7 @@
     "nodemon": "^2.0.6",
     "pretty-bytes": "git+https://git@github.com/ovsoinc/pretty-bytes#bf25220869dd18b71f7a69709040b7940e7609bb",
     "request": "^2.88.2",
-    "winston": "^3.2.1",
+    "winston": "^3.3.3",
     "winston-papertrail": "^1.0.5"
   },
   "devDependencies": {
