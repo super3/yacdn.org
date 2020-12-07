@@ -22,7 +22,7 @@
   "homepage": "https://github.com/ovsoinc/yacdn#readme",
   "dependencies": {
     "axios": "^0.19.2",
-    "debug": "^4.1.1",
+    "debug": "^4.3.1",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "human-readable-numbers": "^0.9.5",
