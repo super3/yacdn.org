@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/ovsoinc/yacdn#readme",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "debug": "^4.1.1",
     "esm": "^3.2.25",
     "express": "^4.17.1",
